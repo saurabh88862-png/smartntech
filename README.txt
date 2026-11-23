@@ -30,3 +30,7 @@ FOLDERS
  tools/, build.ps1   page builder: run build.ps1 after editing articles
  firebase.json, firestore.rules, FIREBASE_SETUP.md   Firebase setup
  sitemap.xml, robots.txt   for Google
+
+LICENSE
+ MIT License - Copyright (c) 2026 Lakshmi Narayan Ray. See the LICENSE file.
+ You may use, copy and modify this project, but keep the copyright notice.

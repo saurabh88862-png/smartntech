@@ -11,6 +11,7 @@
       "start-website.ps1",
       "START-WEBSITE.bat",
       "README.txt",
+      "LICENSE",
       "FIREBASE_SETUP.md",
       "tools/**",
       "**/.*",
