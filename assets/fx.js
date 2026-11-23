@@ -20,7 +20,7 @@
     const href = delaysNav && el.tagName === 'A' ? el.getAttribute('href') : null;
     if (href && !href.startsWith('#') && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
       e.preventDefault();
-      setTimeout(() => { location.href = el.href; }, 650);
+      setTimeout(() => { location.href = el.href; }, 420);
     }
     el.classList.remove('spin-click', 'spin-flip');
     void el.offsetWidth; // restart the animation if clicked again quickly
@@ -96,7 +96,7 @@
   // ---------- Click a floating diamond: it spins 10 times ----------
   // The diamonds are drawn on canvases behind the text, so find the one under the click point.
   const SKIES = [];
-  const BURST_SECONDS = 3.4;
+  const BURST_SECONDS = 2.2;
   document.addEventListener('click', (e) => {
     if (e.target.closest('a, button, input, textarea, select, label, [contenteditable]')) return;
     let hit = null, best = Infinity;
@@ -199,7 +199,7 @@
         vy: rand(6, 16), sway: rand(4, 12), f: rand(0.3, 0.8), p: rand(0, 6.3), tws: rand(1.5, 3.5), x0: 0 };
     }
     function resize() {
-      const r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+      const r = canvas.getBoundingClientRect(), dpr = Math.min(window.innerWidth < 768 ? 1.5 : 2, window.devicePixelRatio || 1); // lighter on phones = smoother
       W = r.width; H = r.height;
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

@@ -43,8 +43,8 @@
 
 /* ---------- Spin in a circle on click (uses the separate `rotate`/`scale` properties,
    so it combines with each element's own transform) ---------- */
-.spin-click { animation: snt-spin .7s cubic-bezier(.34, 1.3, .5, 1); }
-.spin-flip { animation: snt-flip .75s cubic-bezier(.34, 1.3, .5, 1); }
+.spin-click { animation: snt-spin .45s cubic-bezier(.34, 1.3, .5, 1); }
+.spin-flip { animation: snt-flip .5s cubic-bezier(.34, 1.3, .5, 1); }
 @keyframes snt-spin { 0% { rotate: 0deg; scale: 1; } 45% { scale: 1.15; } 100% { rotate: 360deg; scale: 1; } }
 @keyframes snt-flip { 0% { rotate: y 0deg; scale: 1; } 50% { scale: 1.05; } 100% { rotate: y 360deg; scale: 1; } }
 .brand-spin { display: inline-flex !important; cursor: pointer; transform-origin: 50% 50%; }

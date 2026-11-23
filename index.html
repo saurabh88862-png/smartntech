@@ -98,7 +98,7 @@
     .flash{animation:flash .8s ease-out}
     @keyframes flash{0%{transform:scale(1.15);color:#10b981}100%{transform:scale(1)}}
   </style>
-  <link rel="stylesheet" href="assets/fx.css?v=7" />
+  <link rel="stylesheet" href="assets/fx.css?v=8" />
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased flex flex-col min-h-screen transition-colors">
 
@@ -707,7 +707,7 @@
   </div>
 
   <!-- Shared article helpers + list of generated article pages (blog/manifest.js is written by build.ps1) -->
-  <script src="assets/render.js?v=7"></script>
+  <script src="assets/render.js?v=8"></script>
   <script>window.SNT_PAGES = {};</script>
   <script src="blog/manifest.js"></script>
 
@@ -1092,7 +1092,7 @@
           el.animate([{ transform: 'perspective(400px) rotateX(-90deg)', opacity: 0 }, { transform: 'perspective(400px) rotateX(0deg)', opacity: 1 }], { duration: 420, easing: 'cubic-bezier(.34,1.4,.5,1)' });
         });
     }
-    setInterval(rotateHeroWord, 2600);
+    setInterval(rotateHeroWord, 2000);
 
     // [label, icon, article id it opens, colour]
     const TOPICS = [
@@ -1461,6 +1461,6 @@
       if (location.hash === '#admin') openAdminLogin();
     });
   </script>
-  <script src="assets/fx.js?v=7"></script>
+  <script src="assets/fx.js?v=8"></script>
 </body>
 </html>
