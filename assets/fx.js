@@ -99,7 +99,6 @@
   const SKIES = [];
   const BURST_SECONDS = 3.4;
   document.addEventListener('click', (e) => {
-    if (reduceMotion) return;
     if (e.target.closest('a, button, input, textarea, select, label, [contenteditable]')) return;
     let hit = null, best = Infinity;
     for (const sky of SKIES) {
@@ -209,8 +208,11 @@
       gems.forEach((g) => { g.x0 = g.x; });
       stars = active ? Array.from({ length: opts.stars(W, H) }, () => ({ x: spawnX(), y: rand(0, H), s: rand(0.8, 2.6), p: rand(0, 6.3), sp: rand(1, 3) })) : [];
     }
+    // Phones with "reduce/remove animations" (often switched on by battery saver) still get the
+    // diamonds and stars, just moving more gently.
+    const speed = reduceMotion ? 0.4 : 1;
     function frame(now) {
-      const dt = Math.min(0.05, (now - last) / 1000); last = now; t += dt;
+      const dt = Math.min(0.05, (now - last) / 1000) * speed; last = now; t += dt;
       ctx.clearRect(0, 0, W, H);
       const dark = document.documentElement.classList.contains('dark') || opts.alwaysDark;
       for (const s of stars) {
@@ -221,14 +223,12 @@
       }
       ctx.globalAlpha = 1;
       for (const g of gems) {
-        if (!reduceMotion) {
-          g.y -= g.vy * dt;
-          g.x = g.x0 + Math.sin(t * g.f + g.p) * g.sway;
-          if (g.y < -g.r * 3) { Object.assign(g, makeGem(H + g.r * 3)); g.x0 = g.x; }
-        }
-        drawGem(ctx, g, reduceMotion ? 0 : t, dark);
+        g.y -= g.vy * dt;
+        g.x = g.x0 + Math.sin(t * g.f + g.p) * g.sway;
+        if (g.y < -g.r * 3) { Object.assign(g, makeGem(H + g.r * 3)); g.x0 = g.x; }
+        drawGem(ctx, g, t, dark);
       }
-      if (!reduceMotion) requestAnimationFrame(frame);
+      requestAnimationFrame(frame);
     }
     resize();
     SKIES.push({ canvas, get gems() { return gems; }, time: () => t });
