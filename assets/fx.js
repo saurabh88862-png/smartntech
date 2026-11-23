@@ -160,8 +160,8 @@
     const tw = 0.6 + 0.4 * Math.sin(t * g.tws + g.p);
     // soft glow behind the gem
     const glow = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, g.r * 2.6);
-    glow.addColorStop(0, `hsla(${g.h}, 95%, 68%, ${0.32 * tw})`);
-    glow.addColorStop(1, `hsla(${g.h}, 95%, 68%, 0)`);
+    glow.addColorStop(0, `hsla(${g.h}, 95%, ${dark ? 68 : 55}%, ${(dark ? 0.32 : 0.45) * tw})`);
+    glow.addColorStop(1, `hsla(${g.h}, 95%, ${dark ? 68 : 55}%, 0)`);
     ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(g.x, g.y, g.r * 2.6, 0, Math.PI * 2); ctx.fill();
     // facets, back to front
     const faces = GEM_FACES.map((f) => {
@@ -176,8 +176,9 @@
     for (const f of faces) {
       const lit = Math.max(0, f.n[0] * LIGHT[0] + f.n[1] * LIGHT[1] + f.n[2] * LIGHT[2]);
       const spec = Math.pow(lit, 12);
-      ctx.fillStyle = `hsla(${g.h + lit * 30}, 90%, ${28 + lit * 46 + spec * 22}%, 0.92)`;
-      ctx.strokeStyle = `rgba(255, 255, 255, ${0.25 + spec * 0.6})`;
+      ctx.fillStyle = `hsla(${g.h + lit * 30}, 90%, ${(dark ? 28 : 24) + lit * (dark ? 46 : 42) + spec * 22}%, ${dark ? 0.92 : 0.97})`;
+      // Day mode gets a dark outline on the facets so the gem stays crisp on a light background.
+      ctx.strokeStyle = dark ? `rgba(255, 255, 255, ${0.25 + spec * 0.6})` : `rgba(46, 16, 101, ${0.45 - spec * 0.25})`;
       ctx.beginPath();
       ctx.moveTo(g.x + f.a[0] * g.r, g.y + f.a[1] * g.r);
       ctx.lineTo(g.x + f.b[0] * g.r, g.y + f.b[1] * g.r);
@@ -185,7 +186,7 @@
       ctx.closePath(); ctx.fill(); ctx.stroke();
     }
     // star sparkle on the crown
-    drawSparkle(ctx, g.x + g.r * 0.55, g.y - g.r * 0.75, g.r * 0.7 * tw, tw, dark ? '#ffffff' : '#fef3c7');
+    drawSparkle(ctx, g.x + g.r * 0.55, g.y - g.r * 0.75, g.r * 0.7 * tw, tw, dark ? '#ffffff' : '#f59e0b');
   }
 
   function gemSky(canvas, opts) {
@@ -215,11 +216,21 @@
       const dt = Math.min(0.05, (now - last) / 1000) * speed; last = now; t += dt;
       ctx.clearRect(0, 0, W, H);
       const dark = document.documentElement.classList.contains('dark') || opts.alwaysDark;
-      for (const s of stars) {
-        const a = 0.25 + 0.75 * Math.abs(Math.sin(t * s.sp + s.p));
-        ctx.globalAlpha = a; ctx.fillStyle = dark ? '#e0e7ff' : '#7c3aed';
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI * 2); ctx.fill();
-        if (s.s > 1.7) drawSparkle(ctx, s.x, s.y, s.s * 3.6, a * 0.85, dark ? '#ffffff' : '#a78bfa');
+      const LIGHT_STARS = ['#7c3aed', '#db2777', '#2563eb', '#9333ea'];
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        const a = 0.35 + 0.65 * Math.abs(Math.sin(t * s.sp + s.p));
+        if (dark) {
+          ctx.globalAlpha = a; ctx.fillStyle = '#e0e7ff';
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI * 2); ctx.fill();
+          if (s.s > 1.7) drawSparkle(ctx, s.x, s.y, s.s * 3.6, a * 0.85, '#ffffff');
+        } else {
+          // Day mode: deeper colours and more sparkles so they stand out on the light background.
+          const c = LIGHT_STARS[i % LIGHT_STARS.length];
+          ctx.globalAlpha = a; ctx.fillStyle = c;
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.s * 1.2, 0, Math.PI * 2); ctx.fill();
+          if (s.s > 1.3) drawSparkle(ctx, s.x, s.y, s.s * 4.2, a, c);
+        }
       }
       ctx.globalAlpha = 1;
       for (const g of gems) {
