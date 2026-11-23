@@ -152,12 +152,5 @@ html { overflow-x: clip; } /* 3D section entrances must never cause sideways scr
 }
 .dark .cursor-glow { background: radial-gradient(circle, rgba(139, 92, 246, .22), rgba(59, 130, 246, .1) 40%, transparent 70%); }
 
-/* ---------- Respect "reduce motion" ---------- */
-@media (prefers-reduced-motion: reduce) {
-  .gem::after, .cube, .float-y { animation: none !important; }
-  .spin-click, .spin-flip { animation: none !important; }
-  .reveal { transform: none !important; transition: opacity .3s; }
-  .cursor-glow { display: none; }
-  .ticker { overflow-x: auto; }
-  .ticker-track { animation: none !important; }
-}
+/* Effects run the same on every device, including phones with "reduce animations" switched on
+   (often turned on automatically by battery saver). */

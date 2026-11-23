@@ -12,7 +12,6 @@
 
   // ---------- Spin in a circle on click (wide buttons flip in 3D instead, so text stays readable) ----------
   document.addEventListener('click', (e) => {
-    if (reduceMotion) return;
     const el = e.target.closest(SPIN_SELECTOR);
     if (!el || el.disabled) return;
     const delaysNav = el.classList.contains('brand-spin') || el.classList.contains('spin-nav');
@@ -209,9 +208,8 @@
       gems.forEach((g) => { g.x0 = g.x; });
       stars = active ? Array.from({ length: opts.stars(W, H) }, () => ({ x: spawnX(), y: rand(0, H), s: rand(0.8, 2.6), p: rand(0, 6.3), sp: rand(1, 3) })) : [];
     }
-    // Phones with "reduce/remove animations" (often switched on by battery saver) still get the
-    // diamonds and stars, just moving more gently.
-    const speed = reduceMotion ? 0.4 : 1;
+    // Same speed on every device, including phones with "reduce animations" switched on.
+    const speed = 1;
     function frame(now) {
       const dt = Math.min(0.05, (now - last) / 1000) * speed; last = now; t += dt;
       ctx.clearRect(0, 0, W, H);

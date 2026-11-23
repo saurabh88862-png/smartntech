@@ -75,7 +75,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <script>try { var t = localStorage.getItem('su_theme'); t = t ? JSON.parse(t) : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (t === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}</script>
   <style>${PAGE_CSS}</style>
-  <link rel="stylesheet" href="../assets/fx.css?v=6" />
+  <link rel="stylesheet" href="../assets/fx.css?v=7" />
   ${extraLd ? `<script type="application/ld+json">\n${extraLd}\n  </script>` : ''}
 </head>`;
   }
@@ -126,7 +126,7 @@
     </div>
     <div class="border-t border-slate-800 py-5 text-center text-xs">© ${new Date().getFullYear()} ${esc(SITE.name)}. All rights reserved.</div>
   </footer>
-  <script src="../assets/fx.js?v=6"></script>
+  <script src="../assets/fx.js?v=7"></script>
 </body>
 </html>
 `;
