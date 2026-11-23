@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 26 180 196" width="180" height="196">
+  <title>SmartNTech</title>
+  <defs>
+    <linearGradient id="snt-tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#A855F7"/>
+      <stop offset="0.5" stop-color="#6D28D9"/>
+      <stop offset="1" stop-color="#312E81"/>
+    </linearGradient>
+    <linearGradient id="snt-side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3B0764"/>
+      <stop offset="1" stop-color="#1E1B4B"/>
+    </linearGradient>
+    <linearGradient id="snt-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.4"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="snt-shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="snt-core" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F0ABFC" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#F0ABFC" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Holographic chrome for the N face: colours flow through it -->
+    <linearGradient id="snt-holo" x1="0" y1="0" x2="1" y2="1" spreadMethod="reflect">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.25" stop-color="#67E8F9"/>
+      <stop offset="0.5" stop-color="#F0ABFC"/>
+      <stop offset="0.75" stop-color="#FDE68A"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1 1" dur="3s" repeatCount="indefinite"/>
+    </linearGradient>
+    <!-- Bevel: bright upper facet, shaded lower facet -->
+    <linearGradient id="snt-bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.85"/>
+      <stop offset="0.42" stop-color="#FFFFFF" stop-opacity="0.1"/>
+      <stop offset="0.5" stop-color="#1E1B4B" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#1E1B4B" stop-opacity="0.3"/>
+    </linearGradient>
+    <!-- Neon rim colour cycles -->
+    <linearGradient id="snt-rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22D3EE">
+        <animate attributeName="stop-color" values="#22D3EE;#E879F9;#FACC15;#22D3EE" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="1" stop-color="#E879F9">
+        <animate attributeName="stop-color" values="#E879F9;#FACC15;#22D3EE;#E879F9" dur="4s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <clipPath id="snt-clip"><rect x="60" y="40" width="160" height="160" rx="38"/></clipPath>
+    <filter id="snt-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="snt-neon" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+
+    <!-- Stylish N: diamond-cut corners and a sharp diagonal -->
+    <path id="snt-n" d="M99 166 V86 L113 72 H125 L157 124 V84 L169 72 H181 V154 L167 168 H155 L123 116 V156 L111 168 Z" stroke-linejoin="round"/>
+    <path id="snt-spark" d="M0,-14 C2,-4 4,-2 14,0 C4,2 2,4 0,14 C-2,4 -4,2 -14,0 C-4,-2 -2,-4 0,-14Z"/>
+    <path id="snt-orbit" d="M66 120 A74 18 0 1 1 214 120 A74 18 0 1 1 66 120 Z"/>
+  </defs>
+
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -6;0 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1"/>
+
+    <!-- Tile with thick 3D extrusion -->
+    <g fill="url(#snt-side)">
+      <rect x="60" y="54" width="160" height="160" rx="38"/>
+      <rect x="60" y="50" width="160" height="160" rx="38"/>
+      <rect x="60" y="46" width="160" height="160" rx="38"/>
+      <rect x="60" y="43" width="160" height="160" rx="38"/>
+    </g>
+    <rect x="60" y="40" width="160" height="160" rx="38" fill="url(#snt-tile)"/>
+    <rect x="60" y="40" width="160" height="160" rx="38" fill="url(#snt-gloss)"/>
+    <rect x="61" y="41" width="158" height="158" rx="37" fill="none" stroke="url(#snt-rim)" stroke-opacity="0.7" stroke-width="2.5"/>
+
+    <g clip-path="url(#snt-clip)">
+      <!-- Energy core behind the N -->
+      <circle cx="140" cy="120" r="62" fill="url(#snt-core)">
+        <animate attributeName="r" values="52;66;52" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Back half of the orbit ring (behind the N) -->
+      <g transform="rotate(-18 140 120)">
+        <path d="M66 120 A74 18 0 0 1 214 120" fill="none" stroke="url(#snt-rim)" stroke-width="2.5" stroke-opacity="0.55"/>
+      </g>
+    </g>
+
+    <!-- The N: spins in 3D like a diamond -->
+    <g transform="translate(140 120)">
+      <g>
+        <animateTransform attributeName="transform" type="scale"
+          values="1 1;-1 1;1 1;1 1" keyTimes="0;0.25;0.5;1" dur="4s" repeatCount="indefinite"
+          calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;0 0 1 1"/>
+        <g transform="translate(-140 -120)">
+          <!-- Neon halo -->
+          <use href="#snt-n" fill="none" stroke="url(#snt-rim)" stroke-width="10" filter="url(#snt-neon)" opacity="0.9"/>
+          <!-- Deep extrusion, dark to darker -->
+          <use href="#snt-n" transform="translate(9 10)" fill="#0F0A2E" stroke="#0F0A2E" stroke-width="5"/>
+          <use href="#snt-n" transform="translate(7.5 8.3)" fill="#1E1048" stroke="#1E1048" stroke-width="5"/>
+          <use href="#snt-n" transform="translate(6 6.6)" fill="#2E1065" stroke="#2E1065" stroke-width="5"/>
+          <use href="#snt-n" transform="translate(4.5 5)" fill="#3B0764" stroke="#3B0764" stroke-width="5"/>
+          <use href="#snt-n" transform="translate(3 3.3)" fill="#581C87" stroke="#581C87" stroke-width="5"/>
+          <use href="#snt-n" transform="translate(1.5 1.6)" fill="#6B21A8" stroke="#6B21A8" stroke-width="5"/>
+          <!-- Chrome face + bevel + neon edge -->
+          <use href="#snt-n" fill="url(#snt-holo)" stroke="url(#snt-holo)" stroke-width="5"/>
+          <use href="#snt-n" fill="url(#snt-bevel)"/>
+          <use href="#snt-n" fill="none" stroke="url(#snt-rim)" stroke-width="2"/>
+          <!-- Hard specular cut lines -->
+          <path d="M104 160 V88 L114 78" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+          <path d="M163 86 L171 78" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+        </g>
+      </g>
+      <!-- Flash each time the N turns edge-on -->
+      <g fill="#FFFFFF" filter="url(#snt-glow)" opacity="0">
+        <use href="#snt-spark" transform="scale(1.8)"/>
+        <animate attributeName="opacity" values="0;0;1;0;0;1;0;0" keyTimes="0;0.08;0.125;0.17;0.33;0.375;0.42;1" dur="4s" repeatCount="indefinite"/>
+      </g>
+    </g>
+
+    <!-- Front half of the orbit ring + travelling light (in front of the N) -->
+    <g clip-path="url(#snt-clip)">
+      <g transform="rotate(-18 140 120)">
+        <path d="M214 120 A74 18 0 0 1 66 120" fill="none" stroke="url(#snt-rim)" stroke-width="3" stroke-opacity="0.9"/>
+        <circle r="5" fill="#FFFFFF" filter="url(#snt-glow)">
+          <animateMotion dur="3s" repeatCount="indefinite"><mpath href="#snt-orbit"/></animateMotion>
+        </circle>
+      </g>
+    </g>
+
+    <!-- Moving light sweep -->
+    <g clip-path="url(#snt-clip)">
+      <rect x="0" y="20" width="60" height="200" fill="url(#snt-shine)" transform="skewX(-20)">
+        <animate attributeName="x" values="-40;-40;300;300" keyTimes="0;0.55;0.85;1" dur="4s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
+    <!-- Rising light particles -->
+    <g fill="#FDE68A" clip-path="url(#snt-clip)">
+      <circle cx="84" r="2.2"><animate attributeName="cy" values="196;48" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="198" r="1.8" fill="#67E8F9"><animate attributeName="cy" values="196;48" dur="3.6s" begin="1.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="3.6s" begin="1.2s" repeatCount="indefinite"/></circle>
+      <circle cx="140" r="1.6" fill="#F0ABFC"><animate attributeName="cy" values="196;48" dur="4.2s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="4.2s" begin="2s" repeatCount="indefinite"/></circle>
+    </g>
+
+    <!-- Sparkles -->
+    <g transform="translate(188 68)" fill="#FFFFFF" filter="url(#snt-glow)">
+      <use href="#snt-spark">
+        <animateTransform attributeName="transform" type="scale" values="0.6;1.15;0.6" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+      </use>
+    </g>
+    <g transform="translate(84 176)" fill="#FFFFFF" filter="url(#snt-glow)">
+      <use href="#snt-spark" transform="scale(0.45)">
+        <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+      </use>
+    </g>
+  </g>
+</svg>

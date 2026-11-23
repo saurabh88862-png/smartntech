@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL vs NoSQL: Choosing Between PostgreSQL and MongoDB | SmartNTech</title>
+  <meta name="description" content="Data models, scaling, consistency and real use cases to help you decide." />
+  <link rel="canonical" href="https://smartntech.netlify.app/blog/sql-vs-nosql-choosing-between-postgresql-and-mongodb.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="SmartNTech" />
+  <meta property="og:title" content="SQL vs NoSQL: Choosing Between PostgreSQL and MongoDB | SmartNTech" />
+  <meta property="og:description" content="Data models, scaling, consistency and real use cases to help you decide." />
+  <meta property="og:url" content="https://smartntech.netlify.app/blog/sql-vs-nosql-choosing-between-postgresql-and-mongodb.html" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" type="image/svg+xml" href="../assets/logo.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] } } } };</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <script>try { var t = localStorage.getItem('su_theme'); t = t ? JSON.parse(t) : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (t === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}</script>
+  <style>.grad-text{background:linear-gradient(90deg,#2563eb,#7c3aed,#db2777);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .nav3d{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(255,255,255,.68));backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(15,23,42,.06),0 12px 32px -12px rgba(30,41,59,.28),0 4px 8px -4px rgba(30,41,59,.12)}
+    .nav3d::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(120deg,rgba(37,99,235,.55),rgba(124,58,237,.45),rgba(219,39,119,.45),rgba(37,99,235,.55));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .dark .nav3d{background:linear-gradient(180deg,rgba(30,41,59,.82),rgba(15,23,42,.72));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(0,0,0,.4),0 14px 36px -12px rgba(0,0,0,.7)}
+    .nav-track{background:rgba(241,245,249,.85);box-shadow:inset 0 2px 5px rgba(15,23,42,.08),inset 0 -1px 0 rgba(255,255,255,.9)}
+    .dark .nav-track{background:rgba(2,6,23,.55);box-shadow:inset 0 2px 6px rgba(0,0,0,.5),inset 0 -1px 0 rgba(255,255,255,.05)}
+    .nav-link{position:relative;padding:.5rem .95rem;font-size:.875rem;font-weight:600;color:#475569;border-radius:.65rem;transition:color .25s,transform .2s,background .25s}
+    .nav-link:hover{color:#0f172a;transform:translateY(-1px);background:rgba(255,255,255,.7)}
+    .dark .nav-link{color:#94a3b8}.dark .nav-link:hover{color:#fff;background:rgba(255,255,255,.06)}
+    .nav-link.on,.dark .nav-link.on{color:#fff;background:linear-gradient(135deg,#2563eb,#7c3aed 60%,#db2777);box-shadow:0 8px 16px -6px rgba(79,70,229,.7),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -2px 0 rgba(0,0,0,.18)}
+    .btn3d{width:2.5rem;height:2.5rem;display:grid;place-items:center;border-radius:.8rem;color:#475569;background:linear-gradient(180deg,#fff,#eef2f7);border:1px solid #e2e8f0;box-shadow:inset 0 1px 0 #fff,0 3px 0 #cbd5e1,0 8px 14px -8px rgba(15,23,42,.35);transition:transform .15s,box-shadow .15s,color .15s}
+    .btn3d:hover{transform:translateY(-1px);color:#2563eb}
+    .btn3d:active{transform:translateY(2px);box-shadow:inset 0 1px 0 #fff,0 1px 0 #cbd5e1}
+    .dark .btn3d{color:#cbd5e1;background:linear-gradient(180deg,#334155,#1e293b);border-color:#334155;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 3px 0 #0b1220,0 8px 14px -8px rgba(0,0,0,.8)}
+    .dark .btn3d:hover{color:#93c5fd}
+    .logo3d{transition:transform .5s cubic-bezier(.34,1.4,.5,1),filter .5s;filter:drop-shadow(0 6px 10px rgba(124,58,237,.4))}
+    .group:hover .logo3d{transform:perspective(300px) rotateY(-20deg) rotateX(10deg) translateZ(8px) scale(1.06);filter:drop-shadow(-4px 10px 14px rgba(124,58,237,.55))}
+    .m-link{display:flex;align-items:center;gap:.6rem;padding:.75rem .9rem;border-radius:.9rem;color:#334155;background:linear-gradient(180deg,#fff,#f1f5f9);border:1px solid #e2e8f0;box-shadow:inset 0 1px 0 #fff,0 2px 0 #e2e8f0}
+    .dark .m-link{color:#e2e8f0;background:linear-gradient(180deg,#1e293b,#0f172a);border-color:#334155;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 2px 0 #020617}
+    [id]{scroll-margin-top:100px}</style>
+  <link rel="stylesheet" href="../assets/fx.css" />
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "SQL vs NoSQL: Choosing Between PostgreSQL and MongoDB",
+    "description": "Data models, scaling, consistency and real use cases to help you decide.",
+    "datePublished": "2026-09-27",
+    "dateModified": "2026-09-27",
+    "author": {
+      "@type": "Organization",
+      "name": "SmartNTech Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SmartNTech"
+    },
+    "mainEntityOfPage": "https://smartntech.netlify.app/blog/sql-vs-nosql-choosing-between-postgresql-and-mongodb.html",
+    "articleSection": "SQL"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://smartntech.netlify.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://smartntech.netlify.app/blog/index.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "SQL",
+        "item": "https://smartntech.netlify.app/blog/index.html#sql"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "SQL vs NoSQL: Choosing Between PostgreSQL and MongoDB"
+      }
+    ]
+  }
+]
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased flex flex-col min-h-screen">
+  <header class="sticky top-0 z-40 px-3 sm:px-5 pt-3">
+    <div class="nav3d max-w-6xl mx-auto h-[4.5rem] pl-3 pr-2 sm:pl-4 flex items-center justify-between gap-3 rounded-2xl">
+      <a href="../index.html" class="flex items-center gap-2.5 group" aria-label="SmartNTech home"><img src="../assets/logo.svg" alt="SmartNTech logo" class="logo3d w-14 h-14" width="56" height="56" /><span class="text-xl sm:text-2xl font-extrabold tracking-tight"><span class="text-slate-900 dark:text-white">Smart</span><span class="grad-text">N</span><span class="text-blue-600 dark:text-blue-400">Tech</span></span></a>
+      <nav class="nav-track hidden lg:flex items-center p-1 rounded-xl" aria-label="Main">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#tools" class="nav-link">Tools</a>
+        <a href="../blog/index.html" class="nav-link on" aria-current="page">Blog</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+        <a href="../index.html#faq" class="nav-link">FAQ</a>
+        <a href="../index.html#contact" class="nav-link">Contact</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button onclick="var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('su_theme',JSON.stringify(d?'dark':'light'))}catch(e){}" aria-label="Toggle dark mode" class="btn3d">
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9 9 0 1020.354 15.354z"/></svg>
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+        <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" aria-label="Toggle Menu" class="btn3d lg:hidden">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden nav3d max-w-6xl mx-auto mt-2 p-2.5 rounded-2xl grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm font-semibold">
+      <a href="../index.html" class="m-link"><span>🏠</span>Home</a>
+      <a href="../index.html#tools" class="m-link"><span>🧰</span>Tools</a>
+      <a href="../blog/index.html" class="m-link"><span>📰</span>Blog</a>
+      <a href="../index.html#about" class="m-link"><span>👋</span>About</a>
+      <a href="../index.html#faq" class="m-link"><span>❓</span>FAQ</a>
+      <a href="../index.html#contact" class="m-link"><span>✉️</span>Contact</a>
+    </div>
+  </header>
+  <main class="flex-grow max-w-3xl w-full mx-auto px-4 sm:px-6 py-8">
+    <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-5 flex flex-wrap gap-1.5">
+      <a href="../index.html" class="hover:text-blue-600">Home</a><span>›</span>
+      <a href="index.html" class="hover:text-blue-600">Blog</a><span>›</span>
+      <a href="index.html#sql" class="hover:text-blue-600">SQL</a>
+    </nav>
+    <article>
+      <div class="h-40 sm:h-52 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-7xl shadow-lg">⚖️</div>
+      <h1 class="mt-7 text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">SQL vs NoSQL: Choosing Between PostgreSQL and MongoDB</h1>
+      <div class="mt-3 flex flex-wrap items-center gap-2 text-sm font-semibold">
+        <a href="index.html#sql" class="text-blue-600">SQL</a><span class="text-slate-300">•</span>
+        <time datetime="2026-09-27" class="text-slate-500">Sep 27, 2026</time><span class="text-slate-300">•</span>
+        <span class="text-slate-500">8 min read</span>
+      </div>
+      <p class="mt-5 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">Data models, scaling, consistency and real use cases to help you decide.</p>
+      <div class="mt-6 space-y-4 text-base sm:text-[17px] leading-relaxed text-slate-700 dark:text-slate-300">
+        <p>&quot;Should I use SQL or NoSQL?&quot; is one of the first architecture decisions in a new project. Both are excellent tools. The right choice depends on your data and how you query it.</p><h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pt-4">Relational databases (SQL)</h2><p>PostgreSQL, MySQL and SQL Server store data in tables with fixed columns. Relationships are expressed with foreign keys and combined with joins.</p><p><strong>Strengths:</strong></p><ul class="list-disc pl-5 space-y-1.5"><li>Strong consistency and ACID transactions.</li><li>Powerful queries with joins, aggregations and window functions.</li><li>Schemas enforce data quality with types and constraints.</li><li>Mature tooling and decades of operational knowledge.</li></ul><h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pt-4">Document databases (NoSQL)</h2><p>MongoDB and Firestore store data as JSON-like documents. Each document can have its own structure.</p><div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"><div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-400">json</div><pre class="p-4 bg-slate-900 text-slate-100 text-xs leading-relaxed overflow-x-auto font-mono"><code>{
+  &quot;_id&quot;: &quot;order_1001&quot;,
+  &quot;customer&quot;: { &quot;name&quot;: &quot;Asha&quot;, &quot;city&quot;: &quot;Pune&quot; },
+  &quot;items&quot;: [
+    { &quot;product&quot;: &quot;Pen&quot;, &quot;qty&quot;: 2, &quot;price&quot;: 20 },
+    { &quot;product&quot;: &quot;Notebook&quot;, &quot;qty&quot;: 1, &quot;price&quot;: 110 }
+  ],
+  &quot;status&quot;: &quot;shipped&quot;
+}</code></pre></div><p><strong>Strengths:</strong></p><ul class="list-disc pl-5 space-y-1.5"><li>Flexible schema that is easy to evolve during early development.</li><li>Reading a whole document in one request, without joins.</li><li>Built-in horizontal scaling and sharding.</li></ul><h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pt-4">Other NoSQL types</h2><ul class="list-disc pl-5 space-y-1.5"><li><strong>Key-value stores</strong> such as Redis: extremely fast caching, sessions and rate limiting.</li><li><strong>Wide-column stores</strong> such as Cassandra: massive write throughput across data centers.</li><li><strong>Graph databases</strong> such as Neo4j: relationship-heavy data like social networks and recommendations.</li></ul><h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pt-4">How to decide</h2><p>Choose <strong>SQL</strong> when:</p><ul class="list-disc pl-5 space-y-1.5"><li>Your data has clear relationships: users, orders, products, payments.</li><li>You need transactions across multiple records, as in banking or inventory.</li><li>You will run ad-hoc reports and analytics.</li></ul><p>Choose a <strong>document database</strong> when:</p><ul class="list-disc pl-5 space-y-1.5"><li>Data is naturally hierarchical and read as a whole, such as a product catalog with varying attributes.</li><li>The structure changes frequently.</li><li>You need simple horizontal scaling for very large volumes.</li></ul><h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pt-4">The middle ground</h2><p>PostgreSQL supports a <code class="px-1 rounded bg-slate-100 dark:bg-slate-800 text-[0.9em]">JSONB</code> column type with indexing, so you can store flexible attributes inside a relational database:</p><div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"><div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-400">sql</div><pre class="p-4 bg-slate-900 text-slate-100 text-xs leading-relaxed overflow-x-auto font-mono"><code>CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  attributes JSONB
+);
+
+SELECT name FROM products WHERE attributes-&gt;&gt;&#39;color&#39; = &#39;black&#39;;</code></pre></div><p>Many teams find this gives them most of the flexibility of NoSQL with the safety of SQL.</p><h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pt-4">Common myths</h2><ul class="list-disc pl-5 space-y-1.5"><li><strong>&quot;NoSQL is always faster.&quot;</strong> Speed depends on data modeling and indexes, not the label.</li><li><strong>&quot;SQL cannot scale.&quot;</strong> Read replicas, partitioning and managed services handle very large workloads.</li><li><strong>&quot;MongoDB has no transactions.&quot;</strong> It has supported multi-document transactions since version 4.0.</li></ul><h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pt-4">Our recommendation</h2><p>For most web applications, start with <strong>PostgreSQL</strong>. Add <strong>Redis</strong> for caching when needed, and use a document or search database only for specific needs it clearly serves better. Many successful products run on exactly this stack.</p>
+      </div>
+    </article>
+
+    <div class="mt-10 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+      <img src="../assets/logo.svg" alt="SmartNTech logo" class="w-12 h-12 shrink-0" width="40" height="40" />
+      <div><div class="font-bold text-slate-900 dark:text-white">Written by the SmartNTech Team</div><p class="text-sm text-slate-500">Practical tutorials on Java, JavaScript, React, SQL, backend development, DevOps, SEO and careers.</p></div>
+    </div>
+
+    <div class="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
+      <a href="optimize-your-github-and-linkedin-profiles-to-get-noticed.html" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-blue-400"><div class="text-slate-400">← Previous</div><div class="font-semibold text-slate-900 dark:text-white">Optimize Your GitHub and LinkedIn Profiles to Get Noticed</div></a>
+      <a href="deploy-a-spring-boot-app-to-the-cloud-step-by-step-guide.html" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-blue-400 sm:text-right"><div class="text-slate-400">Next →</div><div class="font-semibold text-slate-900 dark:text-white">Deploy a Spring Boot App to the Cloud: Step-by-Step Guide</div></a>
+    </div>
+
+    <section class="mt-12"><h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">More SQL articles</h2>
+      <div class="grid sm:grid-cols-3 gap-4"><a href="../blog/sql-basics-select-where-order-by-and-limit.html" class="tilt group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="h-24 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-4xl">🗃️</div>
+          <div class="p-4"><div class="text-xs font-semibold text-blue-600">SQL <span class="text-slate-400">· 7 min</span></div>
+          <h3 class="mt-1 font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600">SQL Basics: SELECT, WHERE, ORDER BY and LIMIT</h3>
+          <p class="mt-1 text-sm text-slate-500">Write your first queries and learn to filter, sort and limit results.</p></div>
+        </a><a href="../blog/sql-group-by-and-having-aggregations-made-easy.html" class="tilt group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="h-24 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-4xl">📊</div>
+          <div class="p-4"><div class="text-xs font-semibold text-blue-600">SQL <span class="text-slate-400">· 7 min</span></div>
+          <h3 class="mt-1 font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600">SQL GROUP BY and HAVING: Aggregations Made Easy</h3>
+          <p class="mt-1 text-sm text-slate-500">COUNT, SUM, AVG, MIN and MAX with grouping, and the difference between WHERE and HAVING.</p></div>
+        </a><a href="../blog/postgresql-indexing-speed-up-slow-sql-queries.html" class="tilt group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="h-24 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-4xl">🚀</div>
+          <div class="p-4"><div class="text-xs font-semibold text-blue-600">SQL <span class="text-slate-400">· 8 min</span></div>
+          <h3 class="mt-1 font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600">PostgreSQL Indexing: Speed Up Slow SQL Queries</h3>
+          <p class="mt-1 text-sm text-slate-500">Read EXPLAIN ANALYZE, choose the right index type and avoid common indexing mistakes.</p></div>
+        </a></div></section>
+
+    <div class="mt-12 p-6 rounded-3xl bg-gradient-to-r from-blue-600 to-violet-600 text-white text-center">
+      <h2 class="text-xl font-bold">Try our free developer tools</h2>
+      <p class="text-sm text-blue-100 mt-1">Word counter, JSON formatter, password generator and more. 100% in your browser.</p>
+      <a href="../index.html#tools" class="gem inline-block mt-4 px-5 py-2.5 rounded-xl bg-white text-blue-700 font-semibold">Open tools →</a>
+    </div>
+  </main>
+  <footer class="mt-16 bg-slate-950 text-slate-400 border-t border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid sm:grid-cols-3 gap-8 text-sm">
+      <div><div class="flex items-center gap-2.5"><img src="../assets/logo.svg" alt="SmartNTech logo" class="w-11 h-11" width="40" height="40" /><span class="text-lg font-extrabold text-white">Smart<span class="grad-text">N</span><span class="text-blue-400">Tech</span></span></div><p class="mt-3">Free, private developer tools and tutorials.</p></div>
+      <div><h2 class="text-white font-bold mb-3">Categories</h2><ul class="grid grid-cols-2 gap-2"><li><a class="hover:text-white" href="../blog/index.html#python">Python</a></li><li><a class="hover:text-white" href="../blog/index.html#ai">AI</a></li><li><a class="hover:text-white" href="../blog/index.html#automation">Automation</a></li><li><a class="hover:text-white" href="../blog/index.html#backend">Backend</a></li><li><a class="hover:text-white" href="../blog/index.html#career">Career</a></li><li><a class="hover:text-white" href="../blog/index.html#java">Java</a></li><li><a class="hover:text-white" href="../blog/index.html#seo">SEO</a></li><li><a class="hover:text-white" href="../blog/index.html#javascript">JavaScript</a></li><li><a class="hover:text-white" href="../blog/index.html#devops">DevOps</a></li><li><a class="hover:text-white" href="../blog/index.html#react">React</a></li><li><a class="hover:text-white" href="../blog/index.html#sql">SQL</a></li></ul></div>
+      <div><h2 class="text-white font-bold mb-3">Company</h2><ul class="space-y-2"><li><a class="hover:text-white" href="../index.html#about">About Us</a></li><li><a class="hover:text-white" href="../index.html#contact">Contact Us</a></li><li><a class="hover:text-white" href="../index.html#tools">Free Tools</a></li></ul></div>
+    </div>
+    <div class="border-t border-slate-800 py-5 text-center text-xs">© 2026 SmartNTech. All rights reserved.</div>
+  </footer>
+  <script src="../assets/fx.js"></script>
+</body>
+</html>

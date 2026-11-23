@@ -1,0 +1,163 @@
+/* SmartNTech — 3D / "4D" effects shared by index.html and every page in /blog.
+   Loaded after the page's own styles so these rules win. Paired with assets/fx.js. */
+
+/* ---------- Diamond (gem) buttons: pointed ends, facets, sweeping shine ---------- */
+.gem {
+  position: relative;
+  isolation: isolate;
+  border-radius: 0 !important;
+  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 16px 100%, 0 50%);
+  padding-left: 1.75rem !important;
+  padding-right: 1.75rem !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 10px 14px rgba(79, 70, 229, .45)) drop-shadow(0 2px 2px rgba(15, 23, 42, .25));
+  transition: transform .25s cubic-bezier(.34, 1.4, .5, 1), filter .25s;
+}
+.gem::before { /* facets: light top-left plane, darker lower plane */
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, .38) 0 22%, rgba(255, 255, 255, .08) 22% 48%, rgba(0, 0, 0, .14) 48% 100%);
+}
+.gem::after { /* moving shine */
+  content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .65), transparent);
+  transform: skewX(-20deg);
+  animation: snt-shine 3.2s ease-in-out infinite;
+}
+.gem:hover { transform: translateY(-3px) scale(1.04); filter: drop-shadow(0 16px 20px rgba(124, 58, 237, .55)) drop-shadow(0 3px 3px rgba(15, 23, 42, .25)); }
+@keyframes snt-shine { 0%, 55% { left: -60%; } 100% { left: 130%; } }
+
+/* ---------- Diamond icon buttons (theme, menu, back-to-top) ---------- */
+.btn3d {
+  width: 2.3rem !important; height: 2.3rem !important; margin: 0 .35rem;
+  border-radius: .65rem !important;
+  transform: rotate(45deg);
+}
+.btn3d > svg, .btn3d > span { transform: rotate(-45deg); }
+.btn3d:hover { transform: rotate(45deg) translate(-2px, -2px) !important; }
+.btn3d:active { transform: rotate(45deg) translate(1px, 1px) !important; }
+#to-top {
+  border-radius: .8rem !important; transform: rotate(45deg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 4px 0 #4c1d95, 0 14px 24px -8px rgba(79, 70, 229, .7) !important;
+}
+#to-top > span { display: block; transform: rotate(-45deg); }
+
+/* ---------- Spin in a circle on click (uses the separate `rotate`/`scale` properties,
+   so it combines with each element's own transform) ---------- */
+.spin-click { animation: snt-spin .7s cubic-bezier(.34, 1.3, .5, 1); }
+.spin-flip { animation: snt-flip .75s cubic-bezier(.34, 1.3, .5, 1); }
+@keyframes snt-spin { 0% { rotate: 0deg; scale: 1; } 45% { scale: 1.15; } 100% { rotate: 360deg; scale: 1; } }
+@keyframes snt-flip { 0% { rotate: y 0deg; scale: 1; } 50% { scale: 1.05; } 100% { rotate: y 360deg; scale: 1; } }
+.brand-spin { display: inline-flex !important; cursor: pointer; transform-origin: 50% 50%; }
+.click-ripple {
+  position: fixed; z-index: 100; width: 14px; height: 14px; margin: -7px 0 0 -7px; pointer-events: none;
+  border: 2px solid rgba(124, 58, 237, .8); transform: rotate(45deg);
+  animation: snt-ripple .6s ease-out forwards;
+}
+@keyframes snt-ripple { to { scale: 6; opacity: 0; border-color: rgba(219, 39, 119, 0); } }
+
+/* ---------- 3D tilting cards with glare ---------- */
+.tilt, #tool-cards > a, #articles-grid > a, .stat {
+  position: relative; transform-style: preserve-3d;
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .3s;
+}
+.tilt-on {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(12px) !important;
+  box-shadow: 0 30px 50px -22px rgba(30, 41, 59, .5), 0 0 0 1px rgba(124, 58, 237, .25) !important;
+  transition: transform .08s linear, box-shadow .3s;
+}
+.tilt-on::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .38), transparent 55%);
+}
+.dark .tilt-on { box-shadow: 0 30px 50px -22px rgba(0, 0, 0, .85), 0 0 0 1px rgba(167, 139, 250, .3) !important; }
+.dark .tilt-on::after { background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .14), transparent 55%); }
+
+/* ---------- 3D section entrance ---------- */
+.reveal {
+  opacity: 0; transform: perspective(1100px) rotateX(16deg) translateY(36px) scale(.97);
+  transform-origin: 50% 0; transition: opacity .8s ease, transform 1s cubic-bezier(.2, .8, .2, 1);
+}
+.reveal.show { opacity: 1; transform: none; }
+
+/* ---------- 3D headings ---------- */
+.depth-text { text-shadow: 0 1px 0 #cbd5e1, 0 2px 0 #b8c4d4, 0 3px 0 #a5b3c6, 0 4px 0 #94a3b8, 0 10px 18px rgba(30, 41, 59, .25); }
+.dark .depth-text { text-shadow: 0 1px 0 #334155, 0 2px 0 #2b3646, 0 3px 0 #222c3a, 0 4px 0 #1a2230, 0 12px 22px rgba(0, 0, 0, .7); }
+
+/* ---------- Floating 3D glass cubes (hero) ---------- */
+.cube-scene { position: absolute; inset: 0; pointer-events: none; perspective: 900px; overflow: hidden; z-index: 0; }
+.cube-wrap {
+  position: absolute; width: var(--s); height: var(--s);
+  transform: translate3d(calc(var(--mx, 0) * var(--depth, 20px)), calc(var(--my, 0) * var(--depth, 20px)), 0);
+  transition: transform .4s ease-out;
+}
+.cube { position: absolute; inset: 0; transform-style: preserve-3d; animation: snt-cube var(--t, 16s) linear infinite; }
+.cube > span {
+  position: absolute; inset: 0; border-radius: 14%;
+  background: linear-gradient(135deg, rgba(59, 130, 246, .5), rgba(124, 58, 237, .42) 55%, rgba(219, 39, 119, .45));
+  border: 1px solid rgba(255, 255, 255, .6);
+  box-shadow: inset 0 0 18px rgba(255, 255, 255, .25);
+  backdrop-filter: blur(2px);
+}
+.cube > span:nth-child(1) { transform: translateZ(calc(var(--s) / 2)); }
+.cube > span:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
+.cube > span:nth-child(3) { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); }
+.cube > span:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
+.cube > span:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); }
+.cube > span:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
+@keyframes snt-cube { from { transform: rotateX(0) rotateY(0) rotateZ(0); } to { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); } }
+.float-y { animation: snt-float 6s ease-in-out infinite; }
+@keyframes snt-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -14px; } }
+
+/* ---------- Topic buttons (hero): small diamond-ended gems ---------- */
+.topic-chip {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .45rem 1.15rem;
+  font-size: .8rem; font-weight: 700; color: #fff; text-shadow: 0 1px 1px rgba(0, 0, 0, .25);
+  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+  filter: drop-shadow(0 6px 8px rgba(79, 70, 229, .35));
+  transition: transform .2s cubic-bezier(.34, 1.4, .5, 1), filter .2s;
+}
+.topic-chip:hover { transform: translateY(-3px) scale(1.07); filter: drop-shadow(0 10px 12px rgba(124, 58, 237, .5)); }
+
+/* ---------- Scrolling headline ticker ---------- */
+.ticker-band {
+  position: relative; z-index: 10; display: flex; align-items: center;
+  background: linear-gradient(90deg, #1e1b4b, #312e81 50%, #4c1d95);
+  border-block: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 12px 30px -16px rgba(79, 70, 229, .7);
+}
+.ticker-label {
+  flex: none; padding: .75rem 1.6rem .75rem 1rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: #fff; background: linear-gradient(135deg, #db2777, #7c3aed);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+}
+.ticker { flex: 1; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.ticker-track { display: flex; width: max-content; animation: snt-ticker 70s linear infinite; }
+.ticker:hover .ticker-track, .ticker:focus-within .ticker-track { animation-play-state: paused; }
+.ticker-item { display: inline-flex; align-items: center; gap: .55rem; padding: .75rem 0 .75rem 1.5rem; font-size: .85rem; font-weight: 600; white-space: nowrap; color: #e0e7ff; }
+.ticker-item:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.ticker-item::after { content: '◆'; margin-left: 1.5rem; color: #a78bfa; font-size: .55rem; }
+.ticker-cat { font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: .15rem .5rem; border-radius: .4rem; background: rgba(255, 255, 255, .12); color: #c4b5fd; }
+@keyframes snt-ticker { to { transform: translateX(-50%); } }
+
+/* ---------- Floating 3D diamonds + stars (hero background and the page's side spaces) ---------- */
+html { overflow-x: clip; } /* 3D section entrances must never cause sideways scrolling */
+.gem-sky { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.gem-gutter { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 5; pointer-events: none; }
+
+/* ---------- Cursor light ("4D") ---------- */
+.cursor-glow {
+  position: fixed; left: 0; top: 0; z-index: 1; width: 520px; height: 520px; margin: -260px 0 0 -260px;
+  pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(circle, rgba(124, 58, 237, .16), rgba(37, 99, 235, .08) 40%, transparent 70%);
+}
+.dark .cursor-glow { background: radial-gradient(circle, rgba(139, 92, 246, .22), rgba(59, 130, 246, .1) 40%, transparent 70%); }
+
+/* ---------- Respect "reduce motion" ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .gem::after, .cube, .float-y { animation: none !important; }
+  .spin-click, .spin-flip { animation: none !important; }
+  .reveal { transform: none !important; transition: opacity .3s; }
+  .cursor-glow { display: none; }
+  .ticker { overflow-x: auto; }
+  .ticker-track { animation: none !important; }
+}

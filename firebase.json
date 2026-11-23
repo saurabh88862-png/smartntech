@@ -1,0 +1,27 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "firestore.rules",
+      "build.ps1",
+      "start-website.ps1",
+      "START-WEBSITE.bat",
+      "README.txt",
+      "FIREBASE_SETUP.md",
+      "tools/**",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": false,
+    "headers": [
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+      }
+    ]
+  }
+}
