@@ -81,6 +81,14 @@
 }
 .reveal.show { opacity: 1; transform: none; }
 
+/* ---------- Small phones: compact header so logo, name and the 3-4 buttons fit on one row ---------- */
+@media (max-width: 430px) {
+  header .btn3d { width: 2rem !important; height: 2rem !important; margin: 0 .22rem; }
+  header img.logo3d { width: 2.6rem !important; height: 2.6rem !important; }
+  header a.group > span { font-size: 1.05rem !important; }
+  header a.group { gap: .4rem !important; }
+}
+
 /* ---------- Phones: no extra gaps ---------- */
 @media (max-width: 640px) {
   .reveal { transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }

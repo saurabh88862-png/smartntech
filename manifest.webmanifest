@@ -1,0 +1,23 @@
+{
+  "name": "SmartNTech — Free Developer & Content Tools",
+  "short_name": "SmartNTech",
+  "description": "12 free browser tools and 89 programming tutorials. Works offline.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#020617",
+  "theme_color": "#4f46e5",
+  "categories": ["developer", "education", "productivity", "utilities"],
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Word Counter", "url": "./index.html?tool=word", "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }] },
+    { "name": "QR Code Generator", "url": "./index.html?tool=qr", "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }] },
+    { "name": "All articles", "url": "./blog/index.html", "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

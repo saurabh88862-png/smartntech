@@ -21,7 +21,7 @@ $root = [IO.Path]::GetFullPath($PSScriptRoot)
 if (-not $Token) { $Token = [guid]::NewGuid().ToString('N') }
 
 # Only these generated paths may be written by the builder page.
-$allowed = '^(blog/[a-z0-9-]+\.html|blog/manifest\.js|sitemap\.xml|robots\.txt)$'
+$allowed = '^(blog/[a-z0-9-]+\.html|blog/manifest\.js|sitemap\.xml|robots\.txt|assets/tailwind\.css)$'
 $types = @{ '.html' = 'text/html; charset=utf-8'; '.js' = 'application/javascript; charset=utf-8'; '.css' = 'text/css'; '.xml' = 'application/xml'; '.txt' = 'text/plain; charset=utf-8'; '.svg' = 'image/svg+xml' }
 $utf8 = New-Object Text.UTF8Encoding($false)
 

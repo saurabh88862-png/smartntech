@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <title>SmartNTech CSS Builder</title>
+  <!-- Builds assets/tailwind.css: the Tailwind CDN generates CSS for every class used anywhere in the
+       site, and the result is saved as one small static file, so real pages load fast without the CDN.
+       Run:  powershell -ExecutionPolicy Bypass -File .\build.ps1 -CssOnly   (see build.ps1) -->
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          keyframes: {
+            fadeUp: { '0%': { opacity: 0, transform: 'translateY(16px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+            pop: { '0%': { opacity: 0, transform: 'scale(.95)' }, '100%': { opacity: 1, transform: 'scale(1)' } },
+          },
+          animation: { fadeUp: 'fadeUp .6s ease-out both', float: 'float 6s ease-in-out infinite', pop: 'pop .2s ease-out both' },
+        },
+      },
+    };
+  </script>
+  <style>body{font:14px system-ui;background:#0f172a;color:#e2e8f0;padding:24px}</style>
+</head>
+<body>
+  <h1>SmartNTech CSS builder</h1>
+  <p id="status">Scanning files…</p>
+  <div id="classes" style="display:none"></div>
+  <script>
+    (async function () {
+      const token = new URLSearchParams(location.search).get('token');
+      const status = (t) => { document.getElementById('status').textContent = t; };
+      const files = ['index.html', 'blog/index.html', 'tools/build-pages.js', 'assets/app.js', 'assets/tools-extra.js', 'assets/fx.js', 'assets/render.js',
+        'articles/early.js', 'articles/java.js', 'articles/javascript.js', 'articles/react.js', 'articles/sql.js', 'articles/backend.js',
+        'articles/seo.js', 'articles/devops.js', 'articles/career.js', 'articles/python.js', 'articles/ai.js', 'articles/automation.js'];
+      // One article page is enough: all article pages share the same template.
+      const manifest = await (await fetch('/blog/manifest.js')).text();
+      const slug = (manifest.match(/"([a-z0-9-]+)"\s*$/m) || [])[1];
+      if (slug) files.push('blog/' + slug + '.html');
+      const tokens = new Set();
+      for (const f of files) {
+        const text = await (await fetch('/' + f)).text();
+        text.split(/[\s"'`<>={};]+/).forEach((t) => { t = t.replace(/^[(,]+|[),]+$/g, ''); if (t && t.length < 90 && /[a-z]/.test(t) && /^[!a-z0-9@[\]\/:.%#_,()&+-]+$/i.test(t)) tokens.add(t); });
+      }
+      document.getElementById('classes').className = [...tokens].join(' ');
+      status('Generating CSS for ' + tokens.size + ' candidate classes…');
+      await new Promise((r) => setTimeout(r, 2500));
+      const style = [...document.querySelectorAll('style')].find((s) => s.textContent.includes('tailwindcss v'));
+      if (!style) { status('ERROR: Tailwind CSS was not generated (no internet?)'); window.CSS_RESULT = { ok: false }; return; }
+      // Light minify: drop comments (keep the licence line) and collapse whitespace.
+      let css = style.textContent;
+      const licence = (css.match(/\/\*! tailwindcss[^*]*\*\//) || [''])[0];
+      css = licence + '\n' + css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{}:;,>])\s*/g, '$1').replace(/;}/g, '}').trim();
+      const res = await fetch('/__write?token=' + encodeURIComponent(token) + '&path=' + encodeURIComponent('assets/tailwind.css'), { method: 'POST', body: css });
+      status(res.ok ? `Done: assets/tailwind.css (${(css.length / 1024).toFixed(1)} KB)` : 'ERROR: could not save (HTTP ' + res.status + ')');
+      window.CSS_RESULT = { ok: res.ok, kb: +(css.length / 1024).toFixed(1), tokens: tokens.size };
+    })();
+  </script>
+</body>
+</html>

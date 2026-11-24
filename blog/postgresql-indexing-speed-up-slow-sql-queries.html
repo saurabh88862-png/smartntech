@@ -5,16 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PostgreSQL Indexing: Speed Up Slow SQL Queries | SmartNTech</title>
   <meta name="description" content="Read EXPLAIN ANALYZE, choose the right index type and avoid common indexing mistakes." />
-  <link rel="canonical" href="https://smartntech.netlify.app/blog/postgresql-indexing-speed-up-slow-sql-queries.html" />
+  <link rel="canonical" href="https://saurabh88862-png.github.io/smartntech/blog/postgresql-indexing-speed-up-slow-sql-queries.html" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="SmartNTech" />
   <meta property="og:title" content="PostgreSQL Indexing: Speed Up Slow SQL Queries | SmartNTech" />
   <meta property="og:description" content="Read EXPLAIN ANALYZE, choose the right index type and avoid common indexing mistakes." />
-  <meta property="og:url" content="https://smartntech.netlify.app/blog/postgresql-indexing-speed-up-slow-sql-queries.html" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://saurabh88862-png.github.io/smartntech/blog/postgresql-indexing-speed-up-slow-sql-queries.html" />
+  <meta property="og:image" content="https://saurabh88862-png.github.io/smartntech/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://saurabh88862-png.github.io/smartntech/assets/og-image.png" />
   <link rel="icon" type="image/svg+xml" href="../assets/logo.svg" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] } } } };</script>
+  <link rel="manifest" href="../manifest.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
+  <link rel="apple-touch-icon" href="../assets/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -39,7 +44,8 @@
     .m-link{display:flex;align-items:center;gap:.6rem;padding:.75rem .9rem;border-radius:.9rem;color:#334155;background:linear-gradient(180deg,#fff,#f1f5f9);border:1px solid #e2e8f0;box-shadow:inset 0 1px 0 #fff,0 2px 0 #e2e8f0}
     .dark .m-link{color:#e2e8f0;background:linear-gradient(180deg,#1e293b,#0f172a);border-color:#334155;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 2px 0 #020617}
     [id]{scroll-margin-top:100px}</style>
-  <link rel="stylesheet" href="../assets/fx.css?v=9" />
+  <link rel="stylesheet" href="../assets/fx.css?v=10" />
+  <link rel="stylesheet" href="../assets/tailwind.css?v=10" />
   <script type="application/ld+json">
 [
   {
@@ -57,7 +63,7 @@
       "@type": "Organization",
       "name": "SmartNTech"
     },
-    "mainEntityOfPage": "https://smartntech.netlify.app/blog/postgresql-indexing-speed-up-slow-sql-queries.html",
+    "mainEntityOfPage": "https://saurabh88862-png.github.io/smartntech/blog/postgresql-indexing-speed-up-slow-sql-queries.html",
     "articleSection": "SQL"
   },
   {
@@ -68,19 +74,19 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://smartntech.netlify.app/"
+        "item": "https://saurabh88862-png.github.io/smartntech/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Blog",
-        "item": "https://smartntech.netlify.app/blog/index.html"
+        "item": "https://saurabh88862-png.github.io/smartntech/blog/index.html"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": "SQL",
-        "item": "https://smartntech.netlify.app/blog/index.html#sql"
+        "item": "https://saurabh88862-png.github.io/smartntech/blog/index.html#sql"
       },
       {
         "@type": "ListItem",
@@ -95,7 +101,7 @@
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased flex flex-col min-h-screen">
   <header class="sticky top-0 z-40 px-3 sm:px-5 pt-3">
     <div class="nav3d max-w-6xl mx-auto h-[4.5rem] pl-3 pr-2 sm:pl-4 flex items-center justify-between gap-3 rounded-2xl">
-      <a href="../index.html" class="flex items-center gap-2.5 group" aria-label="SmartNTech home"><img src="../assets/logo.svg" alt="SmartNTech logo" class="logo3d w-14 h-14" width="56" height="56" /><span class="text-xl sm:text-2xl font-extrabold tracking-tight"><span class="text-slate-900 dark:text-white">Smart</span><span class="grad-text">N</span><span class="text-blue-600 dark:text-blue-400">Tech</span></span></a>
+      <a href="../index.html" class="flex items-center gap-2.5 group" aria-label="SmartNTech home"><img src="../assets/logo.svg" alt="SmartNTech logo" class="logo3d w-14 h-14" width="40" height="40" /><span class="text-xl sm:text-2xl font-extrabold tracking-tight"><span class="text-slate-900 dark:text-white">Smart</span><span class="grad-text">N</span><span class="text-blue-600 dark:text-blue-400">Tech</span></span></a>
       <nav class="nav-track hidden lg:flex items-center p-1 rounded-xl" aria-label="Main">
         <a href="../index.html" class="nav-link">Home</a>
         <a href="../index.html#tools" class="nav-link">Tools</a>
@@ -123,7 +129,7 @@
       <a href="../index.html#contact" class="m-link"><span>✉️</span>Contact</a>
     </div>
   </header>
-  <main class="flex-grow max-w-3xl w-full mx-auto px-4 sm:px-6 py-8">
+  <main class="flex-grow max-w-3xl w-full mx-auto px-4 sm:px-6 py-8" data-article-id="a4">
     <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-5 flex flex-wrap gap-1.5">
       <a href="../index.html" class="hover:text-blue-600">Home</a><span>›</span>
       <a href="index.html" class="hover:text-blue-600">Blog</a><span>›</span>
@@ -146,6 +152,13 @@ ON orders (customer_id, created_at DESC);</code></pre></div><p>This <strong>comp
       </div>
     </article>
 
+    <div id="article-actions" class="mt-8 flex flex-wrap items-center gap-2">
+      <button id="act-like" class="act-btn"><span class="ico">🤍</span><span class="lbl">Like</span><span id="like-count" class="opacity-70">…</span></button>
+      <button id="act-save" class="act-btn"><span class="ico">☆</span><span class="lbl">Save</span></button>
+      <button id="act-share" class="act-btn"><span class="ico">🔗</span><span class="lbl">Share</span></button>
+      <a id="act-hindi" class="act-btn" rel="noopener"><span class="ico">🇮🇳</span><span class="lbl">Read in Hindi</span></a>
+    </div>
+
     <div class="mt-10 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-4">
       <img src="../assets/logo.svg" alt="SmartNTech logo" class="w-12 h-12 shrink-0" width="40" height="40" />
       <div><div class="font-bold text-slate-900 dark:text-white">Written by the SmartNTech Team</div><p class="text-sm text-slate-500">Practical tutorials on Java, JavaScript, React, SQL, backend development, DevOps, SEO and careers.</p></div>
@@ -157,22 +170,31 @@ ON orders (customer_id, created_at DESC);</code></pre></div><p>This <strong>comp
     </div>
 
     <section class="mt-12"><h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">More SQL articles</h2>
-      <div class="grid sm:grid-cols-3 gap-4"><a href="../blog/sql-basics-select-where-order-by-and-limit.html" class="tilt group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+      <div class="grid sm:grid-cols-3 gap-4"><a href="../blog/sql-basics-select-where-order-by-and-limit.html" data-id="s1" data-q="sql basics: select, where, order by and limit sql write your first queries and learn to filter, sort and limit results." class="blog-card tilt relative group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+          <span role="button" tabindex="0" class="card-save" title="Save for later" aria-label="Save article">☆</span>
           <div class="h-24 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-4xl">🗃️</div>
           <div class="p-4"><div class="text-xs font-semibold text-blue-600">SQL <span class="text-slate-400">· 7 min</span></div>
           <h3 class="mt-1 font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600">SQL Basics: SELECT, WHERE, ORDER BY and LIMIT</h3>
           <p class="mt-1 text-sm text-slate-500">Write your first queries and learn to filter, sort and limit results.</p></div>
-        </a><a href="../blog/sql-group-by-and-having-aggregations-made-easy.html" class="tilt group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+        </a><a href="../blog/sql-group-by-and-having-aggregations-made-easy.html" data-id="s2" data-q="sql group by and having: aggregations made easy sql count, sum, avg, min and max with grouping, and the difference between where and having." class="blog-card tilt relative group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+          <span role="button" tabindex="0" class="card-save" title="Save for later" aria-label="Save article">☆</span>
           <div class="h-24 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-4xl">📊</div>
           <div class="p-4"><div class="text-xs font-semibold text-blue-600">SQL <span class="text-slate-400">· 7 min</span></div>
           <h3 class="mt-1 font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600">SQL GROUP BY and HAVING: Aggregations Made Easy</h3>
           <p class="mt-1 text-sm text-slate-500">COUNT, SUM, AVG, MIN and MAX with grouping, and the difference between WHERE and HAVING.</p></div>
-        </a><a href="../blog/sql-subqueries-and-ctes-write-cleaner-complex-queries.html" class="tilt group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+        </a><a href="../blog/sql-subqueries-and-ctes-write-cleaner-complex-queries.html" data-id="s3" data-q="sql subqueries and ctes: write cleaner complex queries sql nested queries, exists, correlated subqueries and readable with clauses." class="blog-card tilt relative group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+          <span role="button" tabindex="0" class="card-save" title="Save for later" aria-label="Save article">☆</span>
           <div class="h-24 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-4xl">🪆</div>
           <div class="p-4"><div class="text-xs font-semibold text-blue-600">SQL <span class="text-slate-400">· 8 min</span></div>
           <h3 class="mt-1 font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600">SQL Subqueries and CTEs: Write Cleaner Complex Queries</h3>
           <p class="mt-1 text-sm text-slate-500">Nested queries, EXISTS, correlated subqueries and readable WITH clauses.</p></div>
         </a></div></section>
+
+    <section id="comments" class="mt-12">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">💬 Comments</h2>
+      <p class="text-sm text-slate-500 mt-1">Sign in with GitHub to leave a comment or reply.</p>
+      <div id="comments-box" data-repo="saurabh88862-png/smartntech" class="mt-4 min-h-[120px]"></div>
+    </section>
 
     <div class="mt-12 p-6 rounded-3xl bg-gradient-to-r from-blue-600 to-violet-600 text-white text-center">
       <h2 class="text-xl font-bold">Try our free developer tools</h2>
@@ -188,6 +210,7 @@ ON orders (customer_id, created_at DESC);</code></pre></div><p>This <strong>comp
     </div>
     <div class="border-t border-slate-800 py-5 text-center text-xs">© 2026 SmartNTech. All rights reserved.</div>
   </footer>
-  <script src="../assets/fx.js?v=9"></script>
+  <script src="../assets/app.js?v=10"></script>
+  <script src="../assets/fx.js?v=10"></script>
 </body>
 </html>

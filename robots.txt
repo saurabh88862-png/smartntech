@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /tools/
 
-Sitemap: https://smartntech.netlify.app/sitemap.xml
+Sitemap: https://saurabh88862-png.github.io/smartntech/sitemap.xml

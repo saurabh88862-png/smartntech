@@ -66,16 +66,22 @@
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(description)}" />
   <meta property="og:url" content="${esc(canonical)}" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="${esc(abs('assets/og-image.png'))}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="${esc(abs('assets/og-image.png'))}" />
   <link rel="icon" type="image/svg+xml" href="${FAVICON}" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] } } } };</script>
+  <link rel="manifest" href="../manifest.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
+  <link rel="apple-touch-icon" href="../assets/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <script>try { var t = localStorage.getItem('su_theme'); t = t ? JSON.parse(t) : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (t === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}</script>
   <style>${PAGE_CSS}</style>
-  <link rel="stylesheet" href="../assets/fx.css?v=9" />
+  <link rel="stylesheet" href="../assets/fx.css?v=10" />
+  <link rel="stylesheet" href="../assets/tailwind.css?v=10" />
   ${extraLd ? `<script type="application/ld+json">\n${extraLd}\n  </script>` : ''}
 </head>`;
   }
@@ -126,14 +132,17 @@
     </div>
     <div class="border-t border-slate-800 py-5 text-center text-xs">© ${new Date().getFullYear()} ${esc(SITE.name)}. All rights reserved.</div>
   </footer>
-  <script src="../assets/fx.js?v=9"></script>
+  <script src="../assets/app.js?v=10"></script>
+  <script src="../assets/fx.js?v=10"></script>
 </body>
 </html>
 `;
   }
 
   function card(a, prefix) {
-    return `<a href="${prefix}blog/${a.slug}.html" class="tilt group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+    const q = (a.title + ' ' + a.category + ' ' + a.excerpt).toLowerCase();
+    return `<a href="${prefix}blog/${a.slug}.html" data-id="${esc(a.id)}" data-q="${esc(q)}" class="blog-card tilt relative group block rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition">
+          <span role="button" tabindex="0" class="card-save" title="Save for later" aria-label="Save article">☆</span>
           <div class="h-24 bg-gradient-to-br ${esc(a.color)} flex items-center justify-center text-4xl">${esc(a.emoji || '📘')}</div>
           <div class="p-4"><div class="text-xs font-semibold text-blue-600">${esc(a.category)} <span class="text-slate-400">· ${esc(a.readTime)}</span></div>
           <h3 class="mt-1 font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600">${esc(a.title)}</h3>
@@ -164,7 +173,7 @@
       },
     ]);
     return head({ title: a.title + ' | ' + SITE.name, description: a.excerpt, canonical: url, type: 'article', extraLd: ld }) + header('../') + `
-  <main class="flex-grow max-w-3xl w-full mx-auto px-4 sm:px-6 py-8">
+  <main class="flex-grow max-w-3xl w-full mx-auto px-4 sm:px-6 py-8" data-article-id="${esc(a.id)}">
     <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-5 flex flex-wrap gap-1.5">
       <a href="../index.html" class="hover:text-blue-600">Home</a><span>›</span>
       <a href="index.html" class="hover:text-blue-600">Blog</a><span>›</span>
@@ -184,6 +193,13 @@
       </div>
     </article>
 
+    <div id="article-actions" class="mt-8 flex flex-wrap items-center gap-2">
+      <button id="act-like" class="act-btn"><span class="ico">🤍</span><span class="lbl">Like</span><span id="like-count" class="opacity-70">…</span></button>
+      <button id="act-save" class="act-btn"><span class="ico">☆</span><span class="lbl">Save</span></button>
+      <button id="act-share" class="act-btn"><span class="ico">🔗</span><span class="lbl">Share</span></button>
+      <a id="act-hindi" class="act-btn" rel="noopener"><span class="ico">🇮🇳</span><span class="lbl">Read in Hindi</span></a>
+    </div>
+
     <div class="mt-10 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-4">
       ${logo('w-12 h-12 shrink-0')}
       <div><div class="font-bold text-slate-900 dark:text-white">Written by the ${esc(SITE.author)}</div><p class="text-sm text-slate-500">Practical tutorials on Java, JavaScript, React, SQL, backend development, DevOps, SEO and careers.</p></div>
@@ -196,6 +212,12 @@
 
     ${sameCat.length ? `<section class="mt-12"><h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">More ${esc(a.category)} articles</h2>
       <div class="grid sm:grid-cols-3 gap-4">${sameCat.map((x) => card(x, '../')).join('')}</div></section>` : ''}
+
+    <section id="comments" class="mt-12">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">💬 Comments</h2>
+      <p class="text-sm text-slate-500 mt-1">Sign in with GitHub to leave a comment or reply.</p>
+      <div id="comments-box" data-repo="${esc(SITE.repo || '')}" class="mt-4 min-h-[120px]"></div>
+    </section>
 
     <div class="mt-12 p-6 rounded-3xl bg-gradient-to-r from-blue-600 to-violet-600 text-white text-center">
       <h2 class="text-xl font-bold">Try our free developer tools</h2>
@@ -213,9 +235,18 @@
   <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-10">
     <h1 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">Programming tutorials & guides</h1>
     <p class="mt-3 text-slate-500 max-w-2xl">${articles.length} free, in-depth articles across ${categories.length} topics. Pick a category or browse everything below.</p>
-    <div class="mt-6 flex flex-wrap gap-2">${categories.map((c) => `<a href="#${slugify(c)}" class="px-3.5 py-1.5 rounded-full text-xs font-semibold border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-blue-400">${esc(c)} <span class="opacity-60">${articles.filter((a) => a.category === c).length}</span></a>`).join('')}</div>
+    <div class="relative mt-6 max-w-xl">
+      <input id="blog-page-search" type="search" placeholder="Search articles..." class="w-full pl-11 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none" />
+      <svg class="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"/></svg>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2">${categories.map((c) => `<a href="#${slugify(c)}" class="px-3.5 py-1.5 rounded-full text-xs font-semibold border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-blue-400">${esc(c)} <span class="opacity-60">${articles.filter((a) => a.category === c).length}</span></a>`).join('')}</div>
+    <p id="blog-page-none" class="hidden mt-10 text-center text-slate-400">No matching articles found.</p>
+    <section id="saved-section" class="hidden mt-10">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">⭐ Your saved articles</h2>
+      <div id="saved-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
     ${categories.map((c) => `
-    <section id="${slugify(c)}" class="mt-12 scroll-mt-20">
+    <section id="${slugify(c)}" class="cat-section mt-12 scroll-mt-20">
       <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">${esc(c)}</h2>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${articles.filter((a) => a.category === c).map((a) => card(a, '../')).join('')}</div>
     </section>`).join('')}
