@@ -89,8 +89,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <script>try { var t = localStorage.getItem('su_theme'); t = t ? JSON.parse(t) : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (t === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}</script>
   <style>${PAGE_CSS}</style>
-  <link rel="stylesheet" href="../assets/fx.css?v=11" />
-  <link rel="stylesheet" href="../assets/tailwind.css?v=11" />
+  <link rel="stylesheet" href="../assets/fx.css?v=12" />
+  <link rel="stylesheet" href="../assets/tailwind.css?v=12" />
   ${extraLd ? `<script type="application/ld+json">\n${extraLd}\n  </script>` : ''}
 </head>`;
   }
@@ -139,7 +139,10 @@
   const APPS = [
     { slug: 'image-compressor', icon: '🗜️', name: 'Image Compressor', title: 'Free Image Compressor — Compress JPG, PNG & WebP Online', description: 'Compress, resize and convert JPG, PNG and WebP images in bulk, right in your browser. Free, private, no upload, with ZIP download.' },
     { slug: 'pdf-compressor', icon: '📄', name: 'PDF Compressor', title: 'Free PDF Compressor — Reduce PDF File Size Online', description: 'Reduce PDF file size for email and upload forms. Three compression levels, works in your browser, your PDF is never uploaded.' },
-    { slug: 'color-picker', icon: '🎨', name: 'Color Picker', title: 'Color Picker — HEX, RGB, HSL, Palettes & Contrast Checker', description: 'Pick colours and get HEX, RGB, HSL, HSV and CMYK codes, matching palettes, shades, a WCAG contrast checker, gradients and colours from photos.' },  ];
+    { slug: 'color-picker', icon: '🎨', name: 'Color Picker', title: 'Color Picker — HEX, RGB, HSL, Palettes & Contrast Checker', description: 'Pick colours and get HEX, RGB, HSL, HSV and CMYK codes, matching palettes, shades, a WCAG contrast checker, gradients and colours from photos.' },
+    { slug: 'resume-builder', icon: '📝', name: 'Resume Builder', title: 'Free Resume Builder — Make a Professional Resume PDF Online', description: 'Fill in a simple form, choose a Modern, Classic or Minimal template and download a professional, ATS-friendly resume PDF. Free, no sign-up, saved in your browser.' },
+    { slug: 'typing-test', icon: '⌨️', name: 'Typing Speed Test', title: 'Typing Speed Test in Hindi & English — Check Your WPM', description: 'Free typing test in English and Hindi. 30, 60 or 120 seconds, live WPM, accuracy and mistakes, with your best score saved.' },
+  ];
 
   function footer(prefix, extraScript) {
     return `
@@ -152,8 +155,8 @@
     </div>
     <div class="border-t border-slate-800 py-5 text-center text-xs">© ${new Date().getFullYear()} ${esc(SITE.name)}. All rights reserved.</div>
   </footer>
-  <script src="../assets/app.js?v=11"></script>
-  <script src="../assets/fx.js?v=11"></script>${extraScript ? `\n  <script src="${extraScript}"></script>` : ''}
+  <script src="../assets/app.js?v=12"></script>
+  <script src="../assets/fx.js?v=12"></script>${extraScript ? `\n  <script src="${extraScript}"></script>` : ''}
 </body>
 </html>
 `;
@@ -285,7 +288,7 @@
 ${body}
     <section class="mt-14"><h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">More free apps</h2>
       <div class="grid sm:grid-cols-2 gap-4">${others.map((o) => `<a href="../${o.slug}/" class="tilt group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition"><div class="text-3xl">${o.icon}</div><div class="mt-2 font-bold text-slate-900 dark:text-white group-hover:text-blue-600">${esc(o.name)}</div><p class="mt-1 text-sm text-slate-500">${esc(o.description)}</p></a>`).join('')}</div></section>
-  </main>` + footer('../', '../assets/apps/' + x.slug + '.js?v=11');
+  </main>` + footer('../', '../assets/apps/' + x.slug + '.js?v=12');
   }
   const appFiles = [];
   for (const x of APPS) appFiles.push([x.slug + '/index.html', await appPage(x)]);

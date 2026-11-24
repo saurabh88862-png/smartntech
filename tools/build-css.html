@@ -37,8 +37,8 @@
       const files = ['index.html', 'blog/index.html', 'tools/build-pages.js', 'assets/app.js', 'assets/tools-extra.js', 'assets/fx.js', 'assets/render.js',
         'articles/early.js', 'articles/java.js', 'articles/javascript.js', 'articles/react.js', 'articles/sql.js', 'articles/backend.js',
         'articles/seo.js', 'articles/devops.js', 'articles/career.js', 'articles/python.js', 'articles/ai.js', 'articles/automation.js',
-        'apps/image-compressor.html', 'apps/pdf-compressor.html', 'apps/color-picker.html',
-        'assets/apps/image-compressor.js', 'assets/apps/pdf-compressor.js', 'assets/apps/color-picker.js'];
+        'apps/image-compressor.html', 'apps/pdf-compressor.html', 'apps/color-picker.html', 'apps/resume-builder.html', 'apps/typing-test.html',
+        'assets/apps/image-compressor.js', 'assets/apps/pdf-compressor.js', 'assets/apps/color-picker.js', 'assets/apps/resume-builder.js', 'assets/apps/typing-test.js'];
       // One article page is enough: all article pages share the same template.
       const manifest = await (await fetch('/blog/manifest.js')).text();
       const slug = (manifest.match(/"([a-z0-9-]+)"\s*$/m) || [])[1];

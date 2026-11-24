@@ -41,6 +41,14 @@
     // full-page apps
     'New · Full apps': 'नया · पूरे ऐप्स', 'Powerful free apps': 'दमदार मुफ़्त ऐप्स', 'Open app': 'ऐप खोलें', 'More free apps': 'और मुफ़्त ऐप्स',
     'Bigger tools with their own page. Everything runs on your device.': 'बड़े टूल्स, अपने अलग पेज के साथ। सब कुछ आपके डिवाइस पर चलता है।',
+    // Resume Builder + Typing Speed Test
+    'Resume Builder': 'रिज़्यूमे बिल्डर', 'Typing Speed Test': 'टाइपिंग स्पीड टेस्ट', 'Download PDF': 'PDF डाउनलोड करें', 'Fill sample': 'उदाहरण भरें', 'Clear all': 'सब साफ़ करें',
+    'Personal details': 'व्यक्तिगत जानकारी', 'Experience': 'अनुभव', 'Education': 'शिक्षा', 'Projects': 'प्रोजेक्ट्स', 'Skills & more': 'स्किल्स और अन्य', '+ Add': '+ जोड़ें',
+    'Full name': 'पूरा नाम', 'Job title': 'पद', 'Phone': 'फ़ोन', 'Professional summary': 'प्रोफ़ेशनल सारांश', 'Live preview (A4)': 'लाइव प्रीव्यू (A4)',
+    'Fill a form, pick a template and download a professional resume PDF.': 'फ़ॉर्म भरें, टेम्पलेट चुनें और प्रोफ़ेशनल रिज़्यूमे PDF डाउनलोड करें।',
+    'Check your WPM and accuracy in English and Hindi.': 'अंग्रेज़ी और हिंदी में अपनी WPM और शुद्धता जाँचें।',
+    'Seconds left': 'सेकंड बाकी', 'Accuracy': 'शुद्धता', 'Mistakes': 'गलतियाँ', 'Restart': 'फिर से शुरू', 'Your result': 'आपका परिणाम', 'Easy': 'आसान', 'Hard': 'कठिन',
+    'Tap here and start typing. The timer starts with your first key.': 'यहाँ टैप करें और टाइप करना शुरू करें। टाइमर पहली की से शुरू होगा।',
     'PDF Compressor': 'PDF कंप्रेसर', 'Compress PDF': 'PDF छोटा करें', 'Download compressed PDF': 'छोटा PDF डाउनलोड करें',
     'Drop a PDF here or tap to choose': 'PDF यहाँ डालें या चुनने के लिए टैप करें', 'Drop images here or tap to choose': 'इमेज यहाँ डालें या चुनने के लिए टैप करें',
     'Output format': 'आउटपुट फ़ॉर्मेट', 'Max height (px)': 'अधिकतम ऊँचाई (px)', 'Download': 'डाउनलोड', 'Compare': 'तुलना',

@@ -1,0 +1,41 @@
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-600 text-xs font-bold">⌨️ English & हिंदी · free practice</span>
+      <h1 class="mt-4 text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">Typing <span class="grad-text">Speed Test</span></h1>
+      <p class="mt-3 text-slate-500 dark:text-slate-400">Check your speed in words per minute (WPM) and your accuracy. Practise in English or Hindi.</p>
+    </div>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-2">
+      <div class="tt-seg" id="tt-lang"><button data-v="en" class="on">English</button><button data-v="hi">हिंदी</button></div>
+      <div class="tt-seg" id="tt-time"><button data-v="30">30s</button><button data-v="60" class="on">60s</button><button data-v="120">2 min</button></div>
+      <div class="tt-seg" id="tt-level"><button data-v="easy" class="on">Easy</button><button data-v="hard">Hard</button></div>
+    </div>
+
+    <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto">
+      <div class="tt-stat"><div id="tt-left" class="text-blue-600">60</div><span>Seconds left</span></div>
+      <div class="tt-stat"><div id="tt-wpm" class="text-violet-600">0</div><span>WPM</span></div>
+      <div class="tt-stat"><div id="tt-acc" class="text-emerald-600">100%</div><span>Accuracy</span></div>
+      <div class="tt-stat"><div id="tt-err" class="text-rose-600">0</div><span>Mistakes</span></div>
+    </div>
+
+    <div class="relative mt-5 max-w-4xl mx-auto">
+      <div id="tt-box" class="tt-box" tabindex="0" aria-label="Typing area. Click and start typing."><div id="tt-text"></div></div>
+      <textarea id="tt-input" class="tt-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Type here"></textarea>
+      <div id="tt-hint" class="tt-hint">👆 Tap here and start typing. The timer starts with your first key.</div>
+    </div>
+    <p id="tt-hi-note" class="hidden mt-3 text-center text-xs text-slate-500">For Hindi, switch your keyboard to Hindi (phone: Gboard → हिंदी; computer: Windows Hindi keyboard or Google Input Tools).</p>
+
+    <div class="mt-5 flex justify-center gap-2"><button id="tt-restart" class="btn-primary !px-6 !py-2.5 !text-sm">↻ Restart</button><span class="self-center text-xs text-slate-400 hidden sm:inline">or press Esc</span></div>
+
+    <div id="tt-result" class="hidden mt-8 max-w-3xl mx-auto p-6 sm:p-8 rounded-3xl text-white text-center bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-600 shadow-2xl">
+      <div class="text-sm font-semibold opacity-90">Your result</div>
+      <div class="mt-1 text-5xl sm:text-6xl font-black"><span id="tt-r-wpm">0</span> <span class="text-2xl font-bold">WPM</span></div>
+      <div id="tt-r-line" class="mt-2 font-semibold"></div>
+      <div id="tt-r-badge" class="mt-3 inline-block px-4 py-1.5 rounded-full bg-white/20 font-bold"></div>
+      <div id="tt-r-best" class="mt-3 text-sm opacity-90"></div>
+    </div>
+
+    <section class="mt-14 grid md:grid-cols-3 gap-5 text-sm">
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800"><div class="text-2xl">📏</div><h2 class="mt-2 font-bold text-slate-900 dark:text-white">How WPM is counted</h2><p class="mt-1 text-slate-500">Every 5 correct characters (spaces included) count as one word. Wrong characters do not count.</p></div>
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800"><div class="text-2xl">🎯</div><h2 class="mt-2 font-bold text-slate-900 dark:text-white">What is a good speed?</h2><p class="mt-1 text-slate-500">30–40 WPM is average, 50–60 is good for office work, 70+ is excellent. Aim for 95%+ accuracy first.</p></div>
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800"><div class="text-2xl">🏋️</div><h2 class="mt-2 font-bold text-slate-900 dark:text-white">Practise daily</h2><p class="mt-1 text-slate-500">Ten minutes a day with all ten fingers and without looking at the keys raises speed fastest.</p></div>
+    </section>

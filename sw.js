@@ -3,15 +3,15 @@
 // - Pages: network first (always fresh when online), cached copy when offline.
 // - Other files: cached copy first, refreshed in the background.
 // Bump VERSION whenever core files change so old caches are cleared.
-const VERSION = 'snt-v12';
+const VERSION = 'snt-v13';
 const CORE = [
   './', './index.html', './manifest.webmanifest', './blog/index.html', './blog/manifest.js',
   './assets/logo.svg', './assets/icon-192.png', './assets/icon-512.png',
   './assets/tailwind.css', './assets/fx.css', './assets/fx.js', './assets/app.js', './assets/render.js', './assets/tools-extra.js',
   './articles/early.js', './articles/java.js', './articles/javascript.js', './articles/react.js', './articles/sql.js', './articles/backend.js',
   './articles/seo.js', './articles/devops.js', './articles/career.js', './articles/python.js', './articles/ai.js', './articles/automation.js',
-  './image-compressor/', './pdf-compressor/', './color-picker/',
-  './assets/apps/image-compressor.js', './assets/apps/pdf-compressor.js', './assets/apps/color-picker.js',
+  './image-compressor/', './pdf-compressor/', './color-picker/', './resume-builder/', './typing-test/',
+  './assets/apps/image-compressor.js', './assets/apps/pdf-compressor.js', './assets/apps/color-picker.js', './assets/apps/resume-builder.js', './assets/apps/typing-test.js',
 ];
 
 self.addEventListener('install', (e) => {
