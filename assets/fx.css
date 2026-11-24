@@ -73,11 +73,27 @@
 .dark .tilt-on::after { background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .14), transparent 55%); }
 
 /* ---------- 3D section entrance ---------- */
+/* The tilt leans the section's bottom AWAY from the viewer (negative angle). Leaning it towards the
+   viewer made tall sections blow up into thousands of pixels of blank space before they appeared. */
 .reveal {
-  opacity: 0; transform: perspective(1100px) rotateX(16deg) translateY(36px) scale(.97);
+  opacity: 0; transform: perspective(1100px) rotateX(-8deg) translateY(36px) scale(.97);
   transform-origin: 50% 0; transition: opacity .8s ease, transform 1s cubic-bezier(.2, .8, .2, 1);
 }
 .reveal.show { opacity: 1; transform: none; }
+
+/* ---------- Phones: no extra gaps ---------- */
+@media (max-width: 640px) {
+  .reveal { transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.show { transform: none; }
+  /* Section spacing: 64-80px on desktop is far too much on a small screen */
+  main section.py-16, section.py-16, main section > .py-16, section > .py-16 { padding-top: 2.25rem !important; padding-bottom: 2.25rem !important; }
+  section > .py-14 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+  #home > .relative.z-10 { padding-top: 2rem !important; padding-bottom: 2.25rem !important; }
+  footer > .py-12 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+  main .mt-10 { margin-top: 1.5rem !important; }
+  main .mt-12 { margin-top: 1.75rem !important; }
+  main .mb-10 { margin-bottom: 1.5rem !important; }
+}
 
 /* ---------- 3D headings ---------- */
 .depth-text { text-shadow: 0 1px 0 #cbd5e1, 0 2px 0 #b8c4d4, 0 3px 0 #a5b3c6, 0 4px 0 #94a3b8, 0 10px 18px rgba(30, 41, 59, .25); }
