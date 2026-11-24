@@ -50,7 +50,16 @@
     .group:hover .logo3d{transform:perspective(300px) rotateY(-20deg) rotateX(10deg) translateZ(8px) scale(1.06);filter:drop-shadow(-4px 10px 14px rgba(124,58,237,.55))}
     .m-link{display:flex;align-items:center;gap:.6rem;padding:.75rem .9rem;border-radius:.9rem;color:#334155;background:linear-gradient(180deg,#fff,#f1f5f9);border:1px solid #e2e8f0;box-shadow:inset 0 1px 0 #fff,0 2px 0 #e2e8f0}
     .dark .m-link{color:#e2e8f0;background:linear-gradient(180deg,#1e293b,#0f172a);border-color:#334155;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 2px 0 #020617}
-    [id]{scroll-margin-top:100px}`;
+    [id]{scroll-margin-top:100px}
+    .btn-soft,.btn-blue,.btn-violet,.btn-red,.btn-primary{padding:.5rem .85rem;font-size:.75rem;font-weight:600;border-radius:.6rem;transition:all .15s}
+    .btn-soft{background:#f1f5f9;color:#334155}.btn-soft:hover{background:#e2e8f0}.dark .btn-soft{background:#1e293b;color:#cbd5e1}.dark .btn-soft:hover{background:#334155}
+    .btn-blue{background:#eff6ff;color:#1d4ed8}.btn-blue:hover{background:#dbeafe}.dark .btn-blue{background:rgba(37,99,235,.15);color:#93c5fd}
+    .btn-violet{background:#f5f3ff;color:#6d28d9}.btn-violet:hover{background:#ede9fe}.dark .btn-violet{background:rgba(124,58,237,.15);color:#c4b5fd}
+    .btn-red{background:#fff1f2;color:#e11d48}.btn-red:hover{background:#ffe4e6}.dark .btn-red{background:rgba(225,29,72,.15);color:#fda4af}
+    .btn-primary{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;box-shadow:0 6px 16px -6px rgba(79,70,229,.6)}.btn-primary:hover{opacity:.9}.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+    .field{width:100%;padding:.65rem .9rem;font-size:.875rem;background:#f8fafc;border:1px solid #cbd5e1;border-radius:.8rem;outline:none;transition:all .15s;color:inherit}
+    .field:focus{background:#fff;border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.12)}.dark .field{background:#020617;border-color:#334155}.dark .field:focus{background:#0f172a}
+    textarea,input,select{font-family:inherit}`;
 
   function head({ title, description, canonical, type, extraLd }) {
     return `<!DOCTYPE html>
@@ -80,14 +89,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <script>try { var t = localStorage.getItem('su_theme'); t = t ? JSON.parse(t) : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (t === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}</script>
   <style>${PAGE_CSS}</style>
-  <link rel="stylesheet" href="../assets/fx.css?v=10" />
-  <link rel="stylesheet" href="../assets/tailwind.css?v=10" />
+  <link rel="stylesheet" href="../assets/fx.css?v=11" />
+  <link rel="stylesheet" href="../assets/tailwind.css?v=11" />
   ${extraLd ? `<script type="application/ld+json">\n${extraLd}\n  </script>` : ''}
 </head>`;
   }
 
   // prefix = path back to the site root ('../' for pages inside /blog)
-  function header(prefix) {
+  // active: which top link is highlighted ('blog' for article pages, 'tools' for the app pages)
+  function header(prefix, active = 'blog') {
+    const on = (k) => (k === active ? ' on" aria-current="page' : '');
     return `
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased flex flex-col min-h-screen">
   <header class="sticky top-0 z-40 px-3 sm:px-5 pt-3">
@@ -95,8 +106,9 @@
       <a href="${prefix}index.html" class="flex items-center gap-2.5 group" aria-label="SmartNTech home">${logo('logo3d w-14 h-14')}<span class="text-xl sm:text-2xl font-extrabold tracking-tight"><span class="text-slate-900 dark:text-white">Smart</span><span class="grad-text">N</span><span class="text-blue-600 dark:text-blue-400">Tech</span></span></a>
       <nav class="nav-track hidden lg:flex items-center p-1 rounded-xl" aria-label="Main">
         <a href="${prefix}index.html" class="nav-link">Home</a>
-        <a href="${prefix}index.html#tools" class="nav-link">Tools</a>
-        <a href="${prefix}blog/index.html" class="nav-link on" aria-current="page">Blog</a>
+        <a href="${prefix}index.html#tools" class="nav-link${on('tools')}">Tools</a>
+        <a href="${prefix}index.html#apps" class="nav-link${on('apps')}">Apps</a>
+        <a href="${prefix}blog/index.html" class="nav-link${on('blog')}">Blog</a>
         <a href="${prefix}index.html#about" class="nav-link">About</a>
         <a href="${prefix}index.html#faq" class="nav-link">FAQ</a>
         <a href="${prefix}index.html#contact" class="nav-link">Contact</a>
@@ -114,6 +126,7 @@
     <div id="mobile-menu" class="hidden lg:hidden nav3d max-w-6xl mx-auto mt-2 p-2.5 rounded-2xl grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm font-semibold">
       <a href="${prefix}index.html" class="m-link"><span>🏠</span>Home</a>
       <a href="${prefix}index.html#tools" class="m-link"><span>🧰</span>Tools</a>
+      <a href="${prefix}index.html#apps" class="m-link"><span>📱</span>Apps</a>
       <a href="${prefix}blog/index.html" class="m-link"><span>📰</span>Blog</a>
       <a href="${prefix}index.html#about" class="m-link"><span>👋</span>About</a>
       <a href="${prefix}index.html#faq" class="m-link"><span>❓</span>FAQ</a>
@@ -122,18 +135,25 @@
   </header>`;
   }
 
-  function footer(prefix) {
+  // Full-page apps, each built as /<slug>/index.html from apps/<slug>.html + assets/apps/<slug>.js
+  const APPS = [
+    { slug: 'image-compressor', icon: '🗜️', name: 'Image Compressor', title: 'Free Image Compressor — Compress JPG, PNG & WebP Online', description: 'Compress, resize and convert JPG, PNG and WebP images in bulk, right in your browser. Free, private, no upload, with ZIP download.' },
+    { slug: 'pdf-compressor', icon: '📄', name: 'PDF Compressor', title: 'Free PDF Compressor — Reduce PDF File Size Online', description: 'Reduce PDF file size for email and upload forms. Three compression levels, works in your browser, your PDF is never uploaded.' },
+    { slug: 'color-picker', icon: '🎨', name: 'Color Picker', title: 'Color Picker — HEX, RGB, HSL, Palettes & Contrast Checker', description: 'Pick colours and get HEX, RGB, HSL, HSV and CMYK codes, matching palettes, shades, a WCAG contrast checker, gradients and colours from photos.' },  ];
+
+  function footer(prefix, extraScript) {
     return `
   <footer class="mt-16 bg-slate-950 text-slate-400 border-t border-slate-800">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid sm:grid-cols-3 gap-8 text-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
       <div><div class="flex items-center gap-2.5">${logo('w-11 h-11')}<span class="text-lg font-extrabold text-white">Smart<span class="grad-text">N</span><span class="text-blue-400">Tech</span></span></div><p class="mt-3">Free, private developer tools and tutorials.</p></div>
+      <div><h2 class="text-white font-bold mb-3">Apps</h2><ul class="space-y-2">${APPS.map((x) => `<li><a class="hover:text-white" href="${prefix}${x.slug}/">${x.icon} ${esc(x.name)}</a></li>`).join('')}</ul></div>
       <div><h2 class="text-white font-bold mb-3">Categories</h2><ul class="grid grid-cols-2 gap-2">${categories.map((c) => `<li><a class="hover:text-white" href="${prefix}blog/index.html#${slugify(c)}">${esc(c)}</a></li>`).join('')}</ul></div>
       <div><h2 class="text-white font-bold mb-3">Company</h2><ul class="space-y-2"><li><a class="hover:text-white" href="${prefix}index.html#about">About Us</a></li><li><a class="hover:text-white" href="${prefix}index.html#contact">Contact Us</a></li><li><a class="hover:text-white" href="${prefix}index.html#tools">Free Tools</a></li></ul></div>
     </div>
     <div class="border-t border-slate-800 py-5 text-center text-xs">© ${new Date().getFullYear()} ${esc(SITE.name)}. All rights reserved.</div>
   </footer>
-  <script src="../assets/app.js?v=10"></script>
-  <script src="../assets/fx.js?v=10"></script>
+  <script src="../assets/app.js?v=11"></script>
+  <script src="../assets/fx.js?v=11"></script>${extraScript ? `\n  <script src="${extraScript}"></script>` : ''}
 </body>
 </html>
 `;
@@ -253,11 +273,29 @@
   </main>` + footer('../');
   }
 
+  // ---------- App pages ----------
+  async function appPage(x) {
+    const body = await (await fetch('/apps/' + x.slug + '.html')).text();
+    const url = abs(x.slug + '/');
+    const ld = jsonLd({ '@context': 'https://schema.org', '@type': 'WebApplication', name: x.name, url, description: x.description, applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any (web browser)', offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' } });
+    const others = APPS.filter((o) => o.slug !== x.slug);
+    return head({ title: x.title + ' | ' + SITE.name, description: x.description, canonical: url, type: 'website', extraLd: ld }) + header('../', 'apps') + `
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+    <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-5 flex flex-wrap gap-1.5"><a href="../index.html" class="hover:text-blue-600">Home</a><span>›</span><a href="../index.html#apps" class="hover:text-blue-600">Apps</a><span>›</span><span>${esc(x.name)}</span></nav>
+${body}
+    <section class="mt-14"><h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">More free apps</h2>
+      <div class="grid sm:grid-cols-2 gap-4">${others.map((o) => `<a href="../${o.slug}/" class="tilt group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition"><div class="text-3xl">${o.icon}</div><div class="mt-2 font-bold text-slate-900 dark:text-white group-hover:text-blue-600">${esc(o.name)}</div><p class="mt-1 text-sm text-slate-500">${esc(o.description)}</p></a>`).join('')}</div></section>
+  </main>` + footer('../', '../assets/apps/' + x.slug + '.js?v=11');
+  }
+  const appFiles = [];
+  for (const x of APPS) appFiles.push([x.slug + '/index.html', await appPage(x)]);
+
   // ---------- Sitemap, robots, manifest ----------
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${esc(abs(''))}</loc><lastmod>${today}</lastmod></url>
   <url><loc>${esc(abs('blog/index.html'))}</loc><lastmod>${today}</lastmod></url>
+${APPS.map((x) => `  <url><loc>${esc(abs(x.slug + '/'))}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
 ${articles.map((a) => `  <url><loc>${esc(abs('blog/' + a.slug + '.html'))}</loc><lastmod>${esc(a.date)}</lastmod></url>`).join('\n')}
 </urlset>
 `;
@@ -274,6 +312,7 @@ Sitemap: ${SITE.url}/sitemap.xml
   const files = [
     ...articles.map((a, i) => ['blog/' + a.slug + '.html', articlePage(a, i)]),
     ['blog/index.html', blogIndex()],
+    ...appFiles,
     ['blog/manifest.js', manifest],
     ['sitemap.xml', sitemap],
     ['robots.txt', robots],

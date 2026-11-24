@@ -96,10 +96,10 @@
     .flash{animation:flash .8s ease-out}
     @keyframes flash{0%{transform:scale(1.15);color:#10b981}100%{transform:scale(1)}}
   </style>
-  <link rel="stylesheet" href="assets/fx.css?v=10" />
+  <link rel="stylesheet" href="assets/fx.css?v=11" />
   <!-- Prebuilt Tailwind styles (45 KB) instead of the 400 KB Tailwind CDN. Loaded last, like the CDN was,
        so utilities such as "hidden" win over the custom classes above. Rebuild with tools/build-css.html. -->
-  <link rel="stylesheet" href="assets/tailwind.css?v=10" />
+  <link rel="stylesheet" href="assets/tailwind.css?v=11" />
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased flex flex-col min-h-screen transition-colors">
 
@@ -130,6 +130,7 @@
         <span id="nav-pill" class="nav-pill" aria-hidden="true"></span>
         <a href="#home" class="nav-link" data-section="home">Home</a>
         <a href="#tools" class="nav-link" data-section="tools">Tools</a>
+        <a href="#apps" class="nav-link" data-section="apps">Apps</a>
         <a href="#blog" class="nav-link" data-section="blog">Blog</a>
         <a href="#about" class="nav-link" data-section="about">About</a>
         <a href="#faq" class="nav-link" data-section="faq">FAQ</a>
@@ -154,6 +155,7 @@
     <div id="mobile-menu" class="hidden lg:hidden nav3d max-w-6xl mx-auto mt-2 p-2.5 rounded-2xl grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm font-semibold">
       <a href="#home" onclick="toggleMobileMenu()" class="m-link"><span>🏠</span>Home</a>
       <a href="#tools" onclick="toggleMobileMenu()" class="m-link"><span>🧰</span>Tools</a>
+      <a href="#apps" onclick="toggleMobileMenu()" class="m-link"><span>📱</span>Apps</a>
       <a href="#blog" onclick="toggleMobileMenu()" class="m-link"><span>📰</span>Blog</a>
       <a href="#about" onclick="toggleMobileMenu()" class="m-link"><span>👋</span>About</a>
       <a href="#faq" onclick="toggleMobileMenu()" class="m-link"><span>❓</span>FAQ</a>
@@ -386,6 +388,22 @@
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10" id="tool-cards"></div>
     </section>
 
+    <!-- FULL-PAGE APPS -->
+    <section id="apps" class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 reveal">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-widest text-pink-600">New · Full apps</span>
+        <h2 class="mt-2 text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">Powerful free apps</h2>
+        <p class="mt-3 text-slate-500 dark:text-slate-400">Bigger tools with their own page. Everything runs on your device.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <a href="image-compressor/" class="tilt group relative overflow-hidden p-6 rounded-3xl text-white bg-gradient-to-br from-emerald-500 to-teal-600 shadow-xl shadow-emerald-500/20 hover:-translate-y-1 transition">
+          <div class="text-4xl">🗜️</div><h3 class="mt-4 text-lg font-black">Image Compressor</h3><p class="mt-1 text-sm text-emerald-50">Compress, resize and convert many images at once. ZIP download.</p><span class="inline-block mt-4 text-sm font-bold group-hover:translate-x-1 transition">Open app →</span></a>
+        <a href="pdf-compressor/" class="tilt group relative overflow-hidden p-6 rounded-3xl text-white bg-gradient-to-br from-rose-500 to-orange-500 shadow-xl shadow-rose-500/20 hover:-translate-y-1 transition">
+          <div class="text-4xl">📄</div><h3 class="mt-4 text-lg font-black">PDF Compressor</h3><p class="mt-1 text-sm text-rose-50">Make PDFs small enough for email and upload forms.</p><span class="inline-block mt-4 text-sm font-bold group-hover:translate-x-1 transition">Open app →</span></a>
+        <a href="color-picker/" class="tilt group relative overflow-hidden p-6 rounded-3xl text-white bg-gradient-to-br from-fuchsia-500 to-violet-600 shadow-xl shadow-fuchsia-500/20 hover:-translate-y-1 transition">
+          <div class="text-4xl">🎨</div><h3 class="mt-4 text-lg font-black">Color Picker</h3><p class="mt-1 text-sm text-fuchsia-50">Codes, palettes, contrast checker, gradients and photo colours.</p><span class="inline-block mt-4 text-sm font-bold group-hover:translate-x-1 transition">Open app →</span></a>      </div>
+    </section>
+
     <!-- FEATURES BAND -->
     <section class="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
@@ -500,7 +518,9 @@
       <div>
         <h5 class="text-white font-bold mb-3">Company</h5>
         <ul class="space-y-2">
-          <li><a href="blog/index.html" class="hover:text-white">Blog</a></li>
+          <li><a href="image-compressor/" class="hover:text-white">🗜️ Image Compressor app</a></li>
+          <li><a href="pdf-compressor/" class="hover:text-white">📄 PDF Compressor app</a></li>
+          <li><a href="color-picker/" class="hover:text-white">🎨 Color Picker app</a></li>          <li><a href="blog/index.html" class="hover:text-white">Blog</a></li>
           <li><a href="#about" class="hover:text-white">About Us</a></li>
           <li><a href="#contact" class="hover:text-white">Contact Us</a></li>
           <li><button onclick="openPage('privacy')" class="hover:text-white">Privacy Policy</button></li>
@@ -714,7 +734,7 @@
   </div>
 
   <!-- Shared article helpers + list of generated article pages (blog/manifest.js is written by build.ps1) -->
-  <script src="assets/render.js?v=10"></script>
+  <script src="assets/render.js?v=11"></script>
   <script>window.SNT_PAGES = {};</script>
   <script src="blog/manifest.js"></script>
 
@@ -732,8 +752,8 @@
   <script src="articles/ai.js"></script>
   <script src="articles/automation.js"></script>
   <!-- New tools + shared features (language switch, installable app, saved articles) -->
-  <script src="assets/tools-extra.js?v=10"></script>
-  <script src="assets/app.js?v=10"></script>
+  <script src="assets/tools-extra.js?v=11"></script>
+  <script src="assets/app.js?v=11"></script>
 
   <script>
     /* =====================================================================
@@ -1490,6 +1510,6 @@
       if (location.hash === '#admin') openAdminLogin();
     });
   </script>
-  <script src="assets/fx.js?v=10"></script>
+  <script src="assets/fx.js?v=11"></script>
 </body>
 </html>

@@ -37,7 +37,15 @@
   const HI = {
     // navigation
     'Home': 'होम', 'Tools': 'टूल्स', 'Blog': 'ब्लॉग', 'About': 'परिचय', 'FAQ': 'सवाल-जवाब', 'Contact': 'संपर्क',
-    'Install app': 'ऐप इंस्टॉल करें', 'Admin': 'एडमिन',
+    'Install app': 'ऐप इंस्टॉल करें', 'Admin': 'एडमिन', 'Apps': 'ऐप्स',
+    // full-page apps
+    'New · Full apps': 'नया · पूरे ऐप्स', 'Powerful free apps': 'दमदार मुफ़्त ऐप्स', 'Open app': 'ऐप खोलें', 'More free apps': 'और मुफ़्त ऐप्स',
+    'Bigger tools with their own page. Everything runs on your device.': 'बड़े टूल्स, अपने अलग पेज के साथ। सब कुछ आपके डिवाइस पर चलता है।',
+    'PDF Compressor': 'PDF कंप्रेसर', 'Compress PDF': 'PDF छोटा करें', 'Download compressed PDF': 'छोटा PDF डाउनलोड करें',
+    'Drop a PDF here or tap to choose': 'PDF यहाँ डालें या चुनने के लिए टैप करें', 'Drop images here or tap to choose': 'इमेज यहाँ डालें या चुनने के लिए टैप करें',
+    'Output format': 'आउटपुट फ़ॉर्मेट', 'Max height (px)': 'अधिकतम ऊँचाई (px)', 'Download': 'डाउनलोड', 'Compare': 'तुलना',
+    'Contrast checker': 'कंट्रास्ट चेकर', 'Gradient maker': 'ग्रेडिएंट मेकर', 'Colours from a photo': 'फ़ोटो से रंग', 'Saved colours': 'सेव किए रंग',
+    'Choose a photo': 'फ़ोटो चुनें', 'Clear all': 'सब हटाएँ', 'Save colour': 'रंग सेव करें', 'Text': 'टेक्स्ट', 'Swap': 'बदलें',
     // hero
     '12 free tools · 100% private': '12 मुफ़्त टूल्स · 100% प्राइवेट', 'Everyday tools for': 'रोज़ के काम के टूल्स —',
     'Explore Tools': 'टूल्स देखें', 'Read the blog': 'ब्लॉग पढ़ें', 'Popular topics: click to read': 'लोकप्रिय विषय: पढ़ने के लिए क्लिक करें',

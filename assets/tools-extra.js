@@ -50,7 +50,7 @@
             </div>
           </div>`,
 
-    img: head('Image Compressor', 'New', 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600', 'Shrink JPG, PNG and WebP images in your browser. The image is never uploaded.') + `
+    img: head('Image Compressor', 'New', 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600', 'Shrink JPG, PNG and WebP images in your browser. The image is never uploaded. <a href="image-compressor/" class="font-semibold text-blue-600 hover:underline">Open the full app (many images + ZIP) →</a>') + `
           <label for="img-file" class="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 cursor-pointer hover:border-blue-400 transition text-center">
             <span class="text-3xl">🖼️</span><span class="text-sm font-semibold">Tap to choose an image</span><span class="text-xs text-slate-400">JPG, PNG or WebP</span>
             <input id="img-file" type="file" accept="image/*" class="hidden" onchange="SNTX.imgLoad(this.files[0])" />
@@ -66,7 +66,7 @@
             <div class="sm:col-span-2"><a id="img-dl" class="btn-primary inline-block" download="compressed.jpg">Download compressed image</a></div>
           </div>`,
 
-    color: head('Color Picker & Converter', 'New', 'bg-pink-50 dark:bg-pink-950/50 text-pink-600', 'Pick a colour and get HEX, RGB and HSL codes, shades and a contrast check.') + `
+    color: head('Color Picker & Converter', 'New', 'bg-pink-50 dark:bg-pink-950/50 text-pink-600', 'Pick a colour and get HEX, RGB and HSL codes, shades and a contrast check. <a href="color-picker/" class="font-semibold text-blue-600 hover:underline">Open the full app (palettes, gradients, photo colours) →</a>') + `
           <div class="grid lg:grid-cols-2 gap-6">
             <div class="space-y-4">
               <div class="flex items-center gap-3">

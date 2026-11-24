@@ -3,13 +3,15 @@
 // - Pages: network first (always fresh when online), cached copy when offline.
 // - Other files: cached copy first, refreshed in the background.
 // Bump VERSION whenever core files change so old caches are cleared.
-const VERSION = 'snt-v10';
+const VERSION = 'snt-v12';
 const CORE = [
   './', './index.html', './manifest.webmanifest', './blog/index.html', './blog/manifest.js',
   './assets/logo.svg', './assets/icon-192.png', './assets/icon-512.png',
   './assets/tailwind.css', './assets/fx.css', './assets/fx.js', './assets/app.js', './assets/render.js', './assets/tools-extra.js',
   './articles/early.js', './articles/java.js', './articles/javascript.js', './articles/react.js', './articles/sql.js', './articles/backend.js',
   './articles/seo.js', './articles/devops.js', './articles/career.js', './articles/python.js', './articles/ai.js', './articles/automation.js',
+  './image-compressor/', './pdf-compressor/', './color-picker/',
+  './assets/apps/image-compressor.js', './assets/apps/pdf-compressor.js', './assets/apps/color-picker.js',
 ];
 
 self.addEventListener('install', (e) => {
@@ -36,8 +38,9 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
+  // Exact match (query included): a new ?v= number always fetches the new file instead of an old cached copy.
   e.respondWith(
-    caches.match(req, { ignoreSearch: url.origin === location.origin }).then((cached) => {
+    caches.match(req).then((cached) => {
       const net = fetch(req).then((res) => {
         if (res && (res.ok || res.type === 'opaque')) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(req, copy)); }
         return res;
