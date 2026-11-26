@@ -89,8 +89,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <script>try { var t = localStorage.getItem('su_theme'); t = t ? JSON.parse(t) : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); if (t === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}</script>
   <style>${PAGE_CSS}</style>
-  <link rel="stylesheet" href="../assets/fx.css?v=13" />
-  <link rel="stylesheet" href="../assets/tailwind.css?v=13" />
+  <link rel="stylesheet" href="../assets/fx.css?v=15" />
+  <link rel="stylesheet" href="../assets/tailwind.css?v=15" />
   ${extraLd ? `<script type="application/ld+json">\n${extraLd}\n  </script>` : ''}
 </head>`;
   }
@@ -147,6 +147,7 @@
     { slug: 'number-to-words', icon: '🔢', name: 'Number to Words', title: 'Number to Words in Indian Format — Lakh, Crore & Rupees Only', description: 'Convert numbers to words in the Indian lakh/crore system for cheques and invoices, e.g. 1,25,000 = One Lakh Twenty Five Thousand Only. Also in Hindi.' },
     { slug: 'salary-calculator', icon: '💼', name: 'Salary In-hand Calculator', title: 'Salary Calculator India — CTC to In-hand Salary (New vs Old Regime)', description: 'Enter your CTC to see PF, professional tax and income tax deductions and your monthly in-hand salary under the new and old tax regimes.' },
     { slug: 'unit-converter', icon: '🌾', name: 'Indian Unit Converter', title: 'Bigha to Sq Ft, Gaj, Acre & More — Indian Unit Converter', description: 'Convert bigha, biswa, katha, gaj, acre and hectare (state-wise), plus kg to pound, cm to inch, Celsius and litres. Free and instant.' },
+    { slug: 'translator', icon: '🌐', name: 'Language Translator', title: 'English to Hindi Translator — Free Translate in 20+ Languages', description: 'Free English to Hindi and Hindi to English translator, plus Bengali, Marathi, Tamil, Telugu, Gujarati and more. Voice input, listen and copy.' },
     { slug: 'excel-formulas', icon: '📊', name: 'Excel Formula Helper', title: 'Excel Formulas in Hindi — VLOOKUP, IF, SUMIF with Examples', description: 'Learn VLOOKUP, XLOOKUP, IF, SUMIF, COUNTIF and more with simple Hindi explanations and office examples. Build your formula and copy it.' },
   ];
 
@@ -161,8 +162,8 @@
     </div>
     <div class="border-t border-slate-800 py-5 text-center text-xs">© ${new Date().getFullYear()} ${esc(SITE.name)}. All rights reserved.</div>
   </footer>
-  <script src="../assets/app.js?v=13"></script>
-  <script src="../assets/fx.js?v=13"></script>${extraScript ? `\n  <script src="${extraScript}"></script>` : ''}
+  <script src="../assets/app.js?v=15"></script>
+  <script src="../assets/fx.js?v=15"></script>${extraScript ? `\n  <script src="${extraScript}"></script>` : ''}
 </body>
 </html>
 `;
@@ -294,7 +295,7 @@
 ${body}
     <section class="mt-14"><h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">More free apps</h2>
       <div class="grid sm:grid-cols-2 gap-4">${others.map((o) => `<a href="../${o.slug}/" class="tilt group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition"><div class="text-3xl">${o.icon}</div><div class="mt-2 font-bold text-slate-900 dark:text-white group-hover:text-blue-600">${esc(o.name)}</div><p class="mt-1 text-sm text-slate-500">${esc(o.description)}</p></a>`).join('')}</div></section>
-  </main>` + footer('../', '../assets/apps/' + x.slug + '.js?v=13');
+  </main>` + footer('../', '../assets/apps/' + x.slug + '.js?v=15');
   }
   const appFiles = [];
   for (const x of APPS) appFiles.push([x.slug + '/index.html', await appPage(x)]);

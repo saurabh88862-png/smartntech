@@ -55,6 +55,70 @@
   const inr = (n, d = 2) => '₹' + Number(n || 0).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: d });
   window.SNTNum = { wordsIN, wordsINTL, rupeesWords, inr };
 
+  // =============================================================== Anonymous usage stats (all visitors)
+  // Counts only (no names, emails, IPs or cookies) in a free public counter service, read by the admin dashboard.
+  const STATS = 'https://abacus.jasoncameron.dev', SNS = 'smartntech-stats';
+  const ist = () => new Date(Date.now() + 5.5 * 3600 * 1000).toISOString(); // India time, used for day/minute buckets
+  const today = () => ist().slice(0, 10);
+  const minuteKey = (offsetMin = 0) => new Date(Date.now() + 5.5 * 3600 * 1000 - offsetMin * 60000).toISOString().slice(0, 16).replace(/[-:T]/g, '');
+  const statsOn = () => !!location.hostname && !/^(localhost|127\.|\[::1\]|0\.0\.0\.0)/.test(location.hostname) && location.protocol !== 'file:' && !LS.get('snt_no_stats', false);
+  const hit = (key) => { if (!statsOn()) return; try { fetch(`${STATS}/hit/${SNS}/${key}`, { keepalive: true, mode: 'cors' }).catch(() => {}); } catch { /* ignore */ } };
+  function pageKey() {
+    const p = location.pathname.replace(/index\.html$/, '');
+    const m = p.match(/\/([a-z0-9-]+)\/$/);
+    if (/\/blog\/$/.test(p)) return 'blog';
+    if (/\/blog\/[^/]+\.html$/.test(p)) return 'article';
+    if (m && m[1] !== 'smartntech') return m[1];
+    return 'home';
+  }
+  window.SNTTrack = (what) => hit(`${what}-${today()}`);
+  function startStats() {
+    if (!statsOn()) return;
+    const d = today();
+    hit(`pv-${d}`); hit('pv-total'); hit(`pg-${pageKey()}-${d}`);
+    if (LS.get('snt_uv_day', '') !== d) { LS.set('snt_uv_day', d); hit(`uv-${d}`); }
+    // "online now": one heartbeat per visitor per minute while the page is visible
+    let lastMin = '';
+    const beat = () => { if (document.visibilityState !== 'visible') return; const k = minuteKey(); if (k !== lastMin) { lastMin = k; hit(`live-${k}`); } };
+    beat(); setInterval(beat, 15000); document.addEventListener('visibilitychange', beat);
+  }
+  window.SNTStatsAPI = { STATS, SNS, today, minuteKey };
+
+  // Admin dashboard: read the counters and refresh every 20 s while the dashboard Overview is open.
+  const PAGES = [['home', '🏠 Home page'], ['blog', '📰 Blog list'], ['article', '📄 Articles'], ['gst-calculator', '🧾 GST Calculator'], ['emi-calculator', '🏦 EMI Calculator'],
+    ['salary-calculator', '💼 Salary Calculator'], ['number-to-words', '🔢 Number to Words'], ['unit-converter', '🌾 Unit Converter'], ['excel-formulas', '📊 Excel Formulas'],
+    ['translator', '🌐 Translator'], ['resume-builder', '📝 Resume Builder'], ['typing-test', '⌨️ Typing Test'], ['image-compressor', '🗜️ Image Compressor'],
+    ['pdf-compressor', '📄 PDF Compressor'], ['color-picker', '🎨 Color Picker']];
+  const TOOLS = [['word', '📝 Word Counter'], ['json', '🧩 JSON Formatter'], ['pass', '🔑 Password Generator'], ['enc', '🔁 Base64 / URL'], ['seo', '🔍 SEO Preview'], ['age', '📅 Age Calculator'],
+    ['qr', '🔳 QR Code'], ['img', '🗜️ Image Compressor (tool)'], ['color', '🎨 Color Picker (tool)'], ['md', '✍️ Markdown Editor'], ['regex', '🧪 Regex Tester'], ['unit', '📏 Unit Converter (tool)']];
+  const getCount = (key) => fetch(`${STATS}/get/${SNS}/${key}`).then((r) => (r.ok ? r.json() : { value: 0 })).then((d) => +d.value || 0).catch(() => null);
+  const bars = (rows) => {
+    const max = Math.max(1, ...rows.map((r) => r[2]));
+    const shown = rows.filter((r) => r[2] > 0).sort((a, b) => b[2] - a[2]);
+    return shown.length ? shown.map(([, label, n]) => `<div><div class="flex justify-between"><span>${label}</span><b>${n}</b></div><div class="h-1.5 mt-1 rounded-full bg-slate-100 dark:bg-slate-800"><div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-600" style="width:${Math.max(4, (n / max) * 100)}%"></div></div></div>`).join('') : '<p class="text-slate-400">Nothing yet today.</p>';
+  };
+  let liveBusy = false;
+  async function refreshLive() {
+    const box = document.getElementById('live-stats'), dash = document.getElementById('dashboard');
+    if (!box || !dash || dash.classList.contains('hidden') || box.closest('.dash-panel.hidden') || liveBusy) return;
+    liveBusy = true;
+    try {
+      const d = today();
+      const [pv, uv, total, m0, m1, m2] = await Promise.all([getCount(`pv-${d}`), getCount(`uv-${d}`), getCount('pv-total'), getCount(`live-${minuteKey(0)}`), getCount(`live-${minuteKey(1)}`), getCount(`live-${minuteKey(2)}`)]);
+      if (pv === null && total === null) { document.getElementById('ls-updated').textContent = '⚠️ Could not reach the stats service. Check your internet.'; return; }
+      const pages = await Promise.all(PAGES.map(([k, l]) => getCount(`pg-${k}-${d}`).then((n) => [k, l, n || 0])));
+      const tools = await Promise.all(TOOLS.map(([k, l]) => getCount(`tool-${k}-${d}`).then((n) => [k, l, n || 0])));
+      const set = (id, v) => { document.getElementById(id).textContent = (v || 0).toLocaleString('en-IN'); };
+      set('ls-online', Math.max(m0 || 0, m1 || 0, Math.round(((m1 || 0) + (m2 || 0)) / 2)));
+      set('ls-uv', uv); set('ls-pv', pv); set('ls-total', total);
+      document.getElementById('ls-pages').innerHTML = bars(pages);
+      document.getElementById('ls-tools').innerHTML = bars(tools);
+      document.getElementById('ls-updated').textContent = 'Updated ' + new Date().toLocaleTimeString('en-IN') + ' · refreshes every 20 s';
+    } finally { liveBusy = false; }
+  }
+  setInterval(refreshLive, 20000);
+  document.addEventListener('click', (e) => { if (e.target.closest('[onclick*="openDashboard"], .adm-tab, #admin-header-btn')) setTimeout(refreshLive, 400); });
+
   // =============================================================== Saved articles
   const Saved = {
     list() { return LS.get('snt_saved', []); },
@@ -77,6 +141,10 @@
     // full-page apps
     'New · Full apps': 'नया · पूरे ऐप्स', 'Powerful free apps': 'दमदार मुफ़्त ऐप्स', 'Open app': 'ऐप खोलें', 'More free apps': 'और मुफ़्त ऐप्स',
     'Bigger tools with their own page. Everything runs on your device.': 'बड़े टूल्स, अपने अलग पेज के साथ। सब कुछ आपके डिवाइस पर चलता है।',
+    // Translator
+    'Language Translator': 'भाषा अनुवादक', 'English ↔ Hindi and 20+ languages, with voice and listen.': 'अंग्रेज़ी ↔ हिंदी और 20+ भाषाएँ, बोलकर लिखें और सुनें।',
+    'Translate': 'अनुवाद करें', 'Quick phrases': 'तुरंत वाक्य', 'Recent translations': 'हाल के अनुवाद', 'Translate as I type': 'लिखते-लिखते अनुवाद',
+    'Type or paste text here…': 'यहाँ टेक्स्ट लिखें या पेस्ट करें…', 'Translation appears here': 'अनुवाद यहाँ दिखेगा',
     // Money & office apps
     'GST Calculator': 'GST कैलकुलेटर', 'EMI Loan Calculator': 'EMI लोन कैलकुलेटर', 'Salary In-hand Calculator': 'सैलरी इन-हैंड कैलकुलेटर',
     'Number to Words': 'नंबर से शब्द', 'Indian Unit Converter': 'भारतीय यूनिट कन्वर्टर', 'Excel Formula Helper': 'Excel फ़ॉर्मूला हेल्पर',
@@ -385,6 +453,7 @@
   document.head.prepend(css);
 
   function init() {
+    startStats();
     addHeaderButtons();
     articlePage();
     blogIndexPage();

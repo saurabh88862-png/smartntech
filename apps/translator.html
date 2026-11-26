@@ -1,0 +1,60 @@
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 text-xs font-bold">🌐 English ↔ हिंदी + 20 more languages</span>
+      <h1 class="mt-4 text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">Language <span class="grad-text">Translator</span></h1>
+      <p class="mt-3 text-slate-500 dark:text-slate-400">Translate English to Hindi, Hindi to English and between Indian and world languages. Speak, listen and copy.</p>
+    </div>
+
+    <div class="mt-8 calc-card">
+      <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+        <select id="tr-from" class="field" aria-label="Translate from"></select>
+        <button id="tr-swap" class="btn3d" aria-label="Swap languages"><span>⇄</span></button>
+        <select id="tr-to" class="field" aria-label="Translate to"></select>
+      </div>
+
+      <div class="mt-4 grid lg:grid-cols-2 gap-4">
+        <div class="relative">
+          <textarea id="tr-in" rows="8" maxlength="3000" class="field !text-base leading-relaxed !pb-12" placeholder="Type or paste text here…"></textarea>
+          <div class="absolute left-3 right-3 bottom-2.5 flex items-center gap-1.5">
+            <button id="tr-mic" class="tr-ic" title="Speak (voice input)" aria-label="Voice input">🎤</button>
+            <button id="tr-say-in" class="tr-ic" title="Listen" aria-label="Listen to input">🔊</button>
+            <button id="tr-clear" class="tr-ic" title="Clear" aria-label="Clear">✕</button>
+            <span id="tr-count" class="ml-auto text-xs text-slate-400">0 / 3000</span>
+          </div>
+        </div>
+        <div class="relative">
+          <div id="tr-out" class="field !text-base leading-relaxed min-h-[13.5rem] !pb-12 whitespace-pre-wrap bg-slate-50 dark:bg-slate-950" aria-live="polite"><span class="text-slate-400">Translation appears here</span></div>
+          <div class="absolute left-3 right-3 bottom-2.5 flex items-center gap-1.5">
+            <button id="tr-say-out" class="tr-ic" title="Listen" aria-label="Listen to translation">🔊</button>
+            <button id="tr-copy" class="tr-ic" title="Copy" aria-label="Copy translation">📋</button>
+            <span id="tr-status" class="ml-auto text-xs text-slate-400"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        <button id="tr-go" class="btn-primary !px-6 !py-2.5 !text-sm">🌐 Translate</button>
+        <label class="chk !py-2 text-sm"><input type="checkbox" id="tr-auto" checked /> Translate as I type</label>
+        <span class="text-xs text-slate-400 hidden sm:inline">Shortcut: Ctrl + Enter</span>
+      </div>
+    </div>
+
+    <section class="mt-6 grid lg:grid-cols-2 gap-4">
+      <div class="calc-card">
+        <h2 class="font-bold text-slate-900 dark:text-white">⚡ Quick phrases</h2>
+        <div id="tr-phrases" class="mt-3 flex flex-wrap gap-2"></div>
+      </div>
+      <div class="calc-card">
+        <div class="flex items-center justify-between"><h2 class="font-bold text-slate-900 dark:text-white">🕘 Recent translations</h2><button id="tr-hist-clear" class="btn-soft">Clear</button></div>
+        <div id="tr-hist" class="mt-3 space-y-2 text-sm max-h-64 overflow-auto"></div>
+      </div>
+    </section>
+
+    <section class="mt-6 calc-card text-sm text-slate-600 dark:text-slate-400">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">Good to know</h2>
+      <ul class="mt-2 space-y-1.5 list-disc pl-5">
+        <li>Translations come from the free <b>MyMemory</b> translation service, so your text is sent to it over the internet. <b>Do not paste passwords, ID numbers or private documents.</b></li>
+        <li>There is a free daily limit (about 5,000 words per day per internet connection). If it is reached, try again tomorrow.</li>
+        <li>🎤 Voice input works in Chrome and Edge. 🔊 Listening uses your device's voices; for Hindi, install a Hindi voice if you hear nothing.</li>
+        <li>Machine translation can make mistakes. Check important text (legal, medical) with a person who knows the language.</li>
+      </ul>
+    </section>
