@@ -1,0 +1,58 @@
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-600 text-xs font-bold">💼 Got a job offer? Check your real take-home</span>
+      <h1 class="mt-4 text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">Salary <span class="grad-text">In-hand Calculator</span></h1>
+      <p class="mt-3 text-slate-500 dark:text-slate-400">Enter your CTC. See PF, professional tax and income tax cut, and your monthly in-hand salary under the new and old tax regimes.</p>
+    </div>
+
+    <div class="mt-8 grid lg:grid-cols-2 gap-6 items-start">
+      <div class="calc-card space-y-5">
+        <div>
+          <label for="s-ctc" class="calc-l">Annual CTC (₹ per year)</label>
+          <input id="s-ctc" type="number" inputmode="numeric" min="0" value="1200000" class="field mt-1 !text-2xl !font-black" />
+          <div class="mt-2 flex flex-wrap gap-2"><button class="calc-chip" data-ctc="400000">4 LPA</button><button class="calc-chip" data-ctc="600000">6 LPA</button><button class="calc-chip" data-ctc="1000000">10 LPA</button><button class="calc-chip" data-ctc="1500000">15 LPA</button><button class="calc-chip" data-ctc="2500000">25 LPA</button></div>
+        </div>
+        <div>
+          <div class="flex justify-between"><label for="s-basic" class="calc-l">Basic salary (% of CTC)</label><b id="s-basic-v" class="text-sm">40%</b></div>
+          <input id="s-basic" type="range" min="30" max="60" step="5" value="40" class="calc-range mt-2" />
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3 text-sm">
+          <label class="chk"><input type="checkbox" id="s-pf" checked /> Employer PF is part of CTC (12% of basic)</label>
+          <label class="chk"><input type="checkbox" id="s-pfcap" /> PF only on ₹15,000 basic (₹1,800/month)</label>
+          <label class="chk"><input type="checkbox" id="s-grat" checked /> Gratuity is part of CTC (4.81% of basic)</label>
+          <label class="chk"><input type="checkbox" id="s-pt" checked /> Professional tax ₹200/month</label>
+        </div>
+        <details class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
+          <summary class="cursor-pointer font-bold text-slate-900 dark:text-white">Old regime deductions (optional)</summary>
+          <div class="mt-3 grid sm:grid-cols-2 gap-3">
+            <label class="calc-l">80C investments (PPF, ELSS, LIC…)<input id="s-80c" type="number" min="0" value="0" class="field mt-1 normal-case" /></label>
+            <label class="calc-l">80D health insurance<input id="s-80d" type="number" min="0" value="0" class="field mt-1" /></label>
+            <label class="calc-l">HRA exemption (yearly)<input id="s-hra" type="number" min="0" value="0" class="field mt-1" /></label>
+            <label class="calc-l">Home loan interest, NPS, other<input id="s-oth" type="number" min="0" value="0" class="field mt-1" /></label>
+          </div>
+          <p class="mt-2 text-xs text-slate-500">Your employee PF is counted in 80C automatically (80C limit ₹1,50,000).</p>
+        </details>
+      </div>
+
+      <div class="space-y-4">
+        <div class="calc-result">
+          <div class="flex items-center justify-between gap-2"><div class="text-sm font-semibold opacity-90">Monthly in-hand salary</div><div class="calc-seg !bg-white/15" id="s-regime"><button data-v="new" class="on">New regime</button><button data-v="old">Old regime</button></div></div>
+          <div class="mt-2 text-4xl sm:text-5xl font-black" id="s-inhand">₹0</div>
+          <div class="mt-1 text-sm opacity-90" id="s-inhand-y"></div>
+          <div class="mt-3 text-sm font-bold px-3 py-2 rounded-xl bg-white/15" id="s-best"></div>
+        </div>
+        <div class="calc-card overflow-x-auto">
+          <table class="calc-table min-w-[420px]"><thead><tr class="text-xs uppercase text-slate-500"><td></td><td class="!text-right !font-semibold !text-slate-500">Monthly</td><td class="!font-semibold !text-slate-500">Yearly</td></tr></thead><tbody id="s-break"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-10 calc-card text-sm text-slate-600 dark:text-slate-400">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">How this is calculated</h2>
+      <ul class="mt-3 space-y-1.5 list-disc pl-5">
+        <li><b>Gross salary</b> = CTC − employer PF − gratuity (these two are part of CTC but not paid monthly).</li>
+        <li><b>In-hand</b> = Gross salary − your PF (12% of basic) − professional tax − income tax.</li>
+        <li id="s-rules"></li>
+        <li>Health & education cess of 4% is added to tax. Surcharge applies above ₹50 lakh income.</li>
+      </ul>
+      <p class="mt-3 text-xs text-slate-400">This is an estimate. Your company's salary structure (HRA, allowances, bonus, insurance) and state professional tax can change the exact figure.</p>
+    </section>

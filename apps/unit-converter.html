@@ -1,0 +1,39 @@
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-50 dark:bg-lime-950/50 text-lime-700 text-xs font-bold">🌾 Bigha · Biswa · Katha · Gaj · Acre · Kg · Pound</span>
+      <h1 class="mt-4 text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">Indian <span class="grad-text">Unit Converter</span></h1>
+      <p class="mt-3 text-slate-500 dark:text-slate-400">Convert land units like bigha and gaj (state-wise), plus length, weight, temperature and volume.</p>
+    </div>
+
+    <div class="mt-8 flex justify-center"><div class="calc-seg" id="u-cat"></div></div>
+
+    <div class="mt-6 max-w-4xl mx-auto calc-card">
+      <div id="u-state-wrap" class="mb-4">
+        <label for="u-state" class="calc-l">State (bigha and katha size differ by state)</label>
+        <select id="u-state" class="field mt-1"></select>
+      </div>
+      <div class="grid sm:grid-cols-[1fr_auto_1fr] items-end gap-3">
+        <div><label for="u-val" class="calc-l">From</label><input id="u-val" type="number" inputmode="decimal" value="1" class="field mt-1 !text-2xl !font-black" /><select id="u-from" class="field mt-2"></select></div>
+        <button id="u-swap" class="btn3d mx-auto mb-2" aria-label="Swap units"><span>⇄</span></button>
+        <div><span class="calc-l">To</span><div id="u-res" class="field mt-1 !text-2xl !font-black text-blue-600 truncate">0</div><select id="u-to" class="field mt-2"></select></div>
+      </div>
+      <p id="u-formula" class="mt-3 text-sm text-slate-500"></p>
+    </div>
+
+    <div class="mt-6 max-w-4xl mx-auto">
+      <h2 class="calc-l mb-2">All conversions</h2>
+      <div id="u-all" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2"></div>
+    </div>
+
+    <section class="mt-10 max-w-4xl mx-auto calc-card text-sm text-slate-600 dark:text-slate-400">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">Land units quick guide</h2>
+      <table class="calc-table mt-3"><tbody>
+        <tr><td>1 Gaj (square yard)</td><td>9 sq ft</td></tr>
+        <tr><td>1 Acre</td><td>43,560 sq ft · 4,840 gaj</td></tr>
+        <tr><td>1 Hectare</td><td>2.471 acres</td></tr>
+        <tr><td>1 Biswa</td><td>1/20 of a bigha</td></tr>
+        <tr><td>1 Kanal (Punjab, Haryana)</td><td>20 marla · 5,445 sq ft</td></tr>
+        <tr><td>1 Guntha (Maharashtra, Karnataka)</td><td>1,089 sq ft</td></tr>
+        <tr><td>1 Cent (South India)</td><td>435.6 sq ft</td></tr>
+      </tbody></table>
+      <p class="mt-3 text-xs text-slate-400">Bigha, biswa and katha sizes are local and can even differ between districts. Use these values as a guide and confirm with your local land records (tehsil or patwari) before buying or selling land.</p>
+    </section>

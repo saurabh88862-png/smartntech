@@ -19,6 +19,42 @@
     t.textContent = m; t.style.opacity = 1; clearTimeout(t._t); t._t = setTimeout(() => { t.style.opacity = 0; }, 2400);
   };
 
+  // =============================================================== Indian number helpers (used by the calculator apps)
+  const ONES = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  const TENS = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  const two = (n) => (n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? ' ' + ONES[n % 10] : ''));
+  const three = (n) => (n >= 100 ? ONES[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' ' + two(n % 100) : '') : two(n));
+  // Indian system: crore, lakh, thousand, hundred. Works up to 99,99,99,99,99,999 (lakh crore range).
+  function wordsIN(num) {
+    num = Math.floor(Math.abs(num));
+    if (num === 0) return 'Zero';
+    const parts = [];
+    const crore = Math.floor(num / 1e7); num %= 1e7;
+    const lakh = Math.floor(num / 1e5); num %= 1e5;
+    const thousand = Math.floor(num / 1e3); num %= 1e3;
+    if (crore) parts.push((crore >= 1000 ? wordsIN(crore) : three(crore % 1000) || '') + ' Crore');
+    if (lakh) parts.push(two(lakh) + ' Lakh');
+    if (thousand) parts.push(two(thousand) + ' Thousand');
+    if (num) parts.push(three(num));
+    return parts.join(' ').replace(/\s+/g, ' ').trim();
+  }
+  // International system: billion, million, thousand.
+  function wordsINTL(num) {
+    num = Math.floor(Math.abs(num));
+    if (num === 0) return 'Zero';
+    const scale = ['', ' Thousand', ' Million', ' Billion', ' Trillion'];
+    const out = []; let i = 0;
+    while (num > 0 && i < scale.length) { const c = num % 1000; if (c) out.unshift(three(c) + scale[i]); num = Math.floor(num / 1000); i++; }
+    return out.join(' ');
+  }
+  function rupeesWords(amount) {
+    const a = Math.round(Math.abs(amount) * 100) / 100;
+    const r = Math.floor(a), p = Math.round((a - r) * 100);
+    return 'Rupees ' + wordsIN(r) + (p ? ' and ' + two(p) + ' Paise' : '') + ' Only';
+  }
+  const inr = (n, d = 2) => '₹' + Number(n || 0).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: d });
+  window.SNTNum = { wordsIN, wordsINTL, rupeesWords, inr };
+
   // =============================================================== Saved articles
   const Saved = {
     list() { return LS.get('snt_saved', []); },
@@ -41,6 +77,16 @@
     // full-page apps
     'New · Full apps': 'नया · पूरे ऐप्स', 'Powerful free apps': 'दमदार मुफ़्त ऐप्स', 'Open app': 'ऐप खोलें', 'More free apps': 'और मुफ़्त ऐप्स',
     'Bigger tools with their own page. Everything runs on your device.': 'बड़े टूल्स, अपने अलग पेज के साथ। सब कुछ आपके डिवाइस पर चलता है।',
+    // Money & office apps
+    'GST Calculator': 'GST कैलकुलेटर', 'EMI Loan Calculator': 'EMI लोन कैलकुलेटर', 'Salary In-hand Calculator': 'सैलरी इन-हैंड कैलकुलेटर',
+    'Number to Words': 'नंबर से शब्द', 'Indian Unit Converter': 'भारतीय यूनिट कन्वर्टर', 'Excel Formula Helper': 'Excel फ़ॉर्मूला हेल्पर',
+    'Add or remove GST with CGST, SGST and IGST breakup.': 'GST जोड़ें या हटाएँ, CGST, SGST और IGST के ब्रेकअप के साथ।',
+    'Home, car and personal loan EMI with a yearly schedule.': 'होम, कार और पर्सनल लोन की EMI, सालाना शेड्यूल के साथ।',
+    'CTC to monthly in-hand salary, new vs old tax regime.': 'CTC से हर महीने की इन-हैंड सैलरी, नया बनाम पुराना टैक्स रिजीम।',
+    'Bigha, biswa, katha, gaj, acre, kg, pound and more.': 'बीघा, बिस्वा, कट्ठा, गज, एकड़, किलो, पाउंड और भी।',
+    'VLOOKUP, IF, SUMIF in simple Hindi, with a formula builder.': 'VLOOKUP, IF, SUMIF आसान हिंदी में, फ़ॉर्मूला बिल्डर के साथ।',
+    'Monthly EMI': 'मासिक EMI', 'Monthly in-hand salary': 'मासिक इन-हैंड सैलरी', 'Loan amount': 'लोन राशि', 'Interest rate (% per year)': 'ब्याज दर (% सालाना)', 'Tenure': 'अवधि',
+    'Principal': 'मूलधन', 'Total interest': 'कुल ब्याज', 'Total payment': 'कुल भुगतान', 'Amount (₹)': 'राशि (₹)', 'GST rate': 'GST दर', 'GST type': 'GST प्रकार',
     // Resume Builder + Typing Speed Test
     'Resume Builder': 'रिज़्यूमे बिल्डर', 'Typing Speed Test': 'टाइपिंग स्पीड टेस्ट', 'Download PDF': 'PDF डाउनलोड करें', 'Fill sample': 'उदाहरण भरें', 'Clear all': 'सब साफ़ करें',
     'Personal details': 'व्यक्तिगत जानकारी', 'Experience': 'अनुभव', 'Education': 'शिक्षा', 'Projects': 'प्रोजेक्ट्स', 'Skills & more': 'स्किल्स और अन्य', '+ Add': '+ जोड़ें',

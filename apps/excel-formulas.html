@@ -1,0 +1,35 @@
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 dark:bg-green-950/50 text-green-700 text-xs font-bold">📊 Excel & Google Sheets · आसान हिंदी में</span>
+      <h1 class="mt-4 text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">Excel <span class="grad-text">Formula Helper</span></h1>
+      <p class="mt-3 text-slate-500 dark:text-slate-400">VLOOKUP, IF, SUMIF and more, explained in simple Hindi with real office examples. Build your own formula and copy it.</p>
+    </div>
+
+    <section class="mt-8 calc-card">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">🛠️ Formula builder (अपना formula बनाएँ)</h2>
+      <div class="mt-3 calc-seg" id="xb-type"><button data-v="vlookup" class="on">VLOOKUP</button><button data-v="if">IF</button><button data-v="sumif">SUMIF</button><button data-v="countif">COUNTIF</button></div>
+      <div id="xb-fields" class="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <code id="xb-out" class="flex-1 min-w-[240px] px-4 py-3 rounded-xl bg-slate-900 text-emerald-300 font-mono text-sm sm:text-base break-all"></code>
+        <button id="xb-copy" class="btn-primary !py-3">📋 Copy formula</button>
+      </div>
+      <p id="xb-explain" class="mt-2 text-sm text-slate-600 dark:text-slate-400"></p>
+    </section>
+
+    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+      <input id="xf-q" type="search" placeholder="Formula खोजें: vlookup, sum, date, text..." class="field !py-3 sm:max-w-sm" />
+      <div class="flex flex-wrap gap-2" id="xf-cats"></div>
+    </div>
+    <div id="xf-list" class="mt-5 grid lg:grid-cols-2 gap-4"></div>
+    <p id="xf-none" class="hidden mt-8 text-center text-slate-400">कोई formula नहीं मिला। कोई और शब्द आज़माएँ।</p>
+
+    <section class="mt-10 calc-card text-sm text-slate-600 dark:text-slate-400">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">⚠️ Common errors और उनका मतलब</h2>
+      <table class="calc-table mt-3"><tbody>
+        <tr><td><b>#N/A</b></td><td>ढूँढी गई value list में नहीं मिली (VLOOKUP/XLOOKUP में spelling या extra space चेक करें)।</td></tr>
+        <tr><td><b>#VALUE!</b></td><td>गलत type का data, जैसे number की जगह text।</td></tr>
+        <tr><td><b>#REF!</b></td><td>Formula जिस cell/column को देख रहा था वह delete हो गया या range छोटी है।</td></tr>
+        <tr><td><b>#DIV/0!</b></td><td>किसी number को 0 या खाली cell से divide किया गया।</td></tr>
+        <tr><td><b>#NAME?</b></td><td>Formula का नाम गलत लिखा है या text को " " में नहीं रखा।</td></tr>
+      </tbody></table>
+      <p class="mt-3">💡 Tip: Range को fix करने के लिए $ लगाएँ, जैसे <code>$A$2:$C$100</code>, ताकि formula नीचे drag करने पर range न बदले।</p>
+    </section>
